@@ -1,21 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ExtensionMethods;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] uint goldAmount;
+    [SerializeField] private uint goldAmount;
 
-    // [SerializeField] Weapon equippedWeapon;
+    private SpriteRenderer spriteRenderer;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] Sprite playerSprite;
+
+    private void Awake()
     {
-        
+        spriteRenderer = this.Get<SpriteRenderer>();
+
+        if (playerSprite != null)
+            spriteRenderer.sprite = playerSprite;
     }
 
-    public virtual void OnDeath()
+    public virtual void OnDeath() {  }
+
+    // Method to set the sprite dynamically (optional)
+    public void SetPlayerSprite(Sprite newSprite)
     {
-        
+        playerSprite = newSprite;
+
+        if (spriteRenderer != null)
+            spriteRenderer.sprite = playerSprite;
     }
 }
