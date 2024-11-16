@@ -5,20 +5,27 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] SpriteRenderer m_spriteRenderer;
-    [Range(0, 10f)]
+    [Range(0, 200f)]
     [SerializeField] float travelSpeed;
     [Range(0, 10f)]
-    [SerializeField] int damage;
+    [SerializeField] uint damage;
 
-    // Update is called once per frame
-    void Update()
+    Rigidbody2D rb;
+
+    void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+        if(!rb)
+        {
+            Debug.Log("Rigidbody is not attached!");
+            return;
+        }
+        rb.AddForce(this.transform.right * travelSpeed);
     }
 
     public void OnEnemyCollision() // Death logic for enemy
     {
-        GameManager.enemy.OnDeath();
+        GameManager.enemy.TakeDamage(damage);
     }
 
     private void OnCollisionEnter2D(Collision2D collider)
@@ -27,5 +34,7 @@ public class Projectile : MonoBehaviour
         {
             OnEnemyCollision();
         }
+
+        Destroy(this.gameObject);
     }
 }

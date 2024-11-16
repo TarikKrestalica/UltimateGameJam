@@ -33,6 +33,19 @@ public class GameManager : MonoBehaviour
 
     private Enemy m_enemy;
 
+    public static GameObject projectile{
+        get{
+            if(gameManager.m_projectile == null)
+            {
+                gameManager.m_projectile = Resources.Load("Prefabs/BaseProjectile") as GameObject;
+            }
+
+            return gameManager.m_projectile;
+        }
+    }
+
+    private GameObject m_projectile;
+
     void Start()
     {
         if(gameManager != null)

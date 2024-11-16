@@ -32,9 +32,21 @@ public class Enemy : MonoBehaviour
         RunBack();
     }
 
+    public void TakeDamage(uint damage_amt)
+    {
+        if(health - damage_amt <= 0)
+        {
+            OnDeath();
+        }
+
+        health -= damage_amt;
+    }
+
     public virtual void OnDeath()
     {
-        Debug.Log("Need to work on!");
+        uint totalCoinsEnemyLost = deathGold + goldStealAmount;
+        GameManager.player.AddGold(totalCoinsEnemyLost);
+        Destroy(this.gameObject);
     }
 
     public virtual void OnStealGold(GameObject g)

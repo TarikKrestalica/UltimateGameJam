@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] uint goldAmount;
     [SerializeField] TMP_Text goldAmountTxt;
+    [Range(0, 100f)]
+    [SerializeField] float rotationSpeed;
     // [SerializeField] Weapon equippedWeapon;
 
     void Start()
@@ -17,7 +19,23 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 curRotation = this.transform.localEulerAngles;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            curRotation.z -= rotationSpeed * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            curRotation.z += rotationSpeed * Time.deltaTime;
+        }
+
+        this.transform.localEulerAngles = curRotation;
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Fire bullet!");
+            Instantiate(GameManager.projectile, GameManager.player.transform.position + GameManager.player.transform.right * 1.2f, GameManager.player.transform.rotation);
+        }
     }
 
     public virtual void OnDeath() 
@@ -39,6 +57,12 @@ public class Player : MonoBehaviour
         }
 
         goldAmount -= amt;
+        SetCurrentGoldAmount(goldAmount);
+    }
+
+    public void AddGold(uint amount)
+    {
+        goldAmount += amount;
         SetCurrentGoldAmount(goldAmount);
     }
 }
