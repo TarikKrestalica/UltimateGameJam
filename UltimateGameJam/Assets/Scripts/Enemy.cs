@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        targetPoint = GameObject.FindGameObjectWithTag("Player");
         startingPoint = this.transform.position;
     }
 

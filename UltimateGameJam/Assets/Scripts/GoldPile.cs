@@ -13,7 +13,6 @@ public class GoldPile : MonoBehaviour
 
     public void UpdateSprite(uint goldAmount)
     {
-        
         spriteRenderer.sprite = goldAmount switch
         {
             0      => sprites[0],
