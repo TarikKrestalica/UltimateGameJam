@@ -10,6 +10,12 @@ public class Enemy : MonoBehaviour
     [Range(0, 10f)]
     [SerializeField] float movement;
 
+    [SerializeField] GameObject targetPoint;
+
+    void Update()
+    {
+        MoveToGoldStash();
+    }
 
     public virtual void OnDeath()
     {
@@ -19,5 +25,10 @@ public class Enemy : MonoBehaviour
     public virtual void OnStealGold()
     {
 
+    }
+
+    public virtual void MoveToGoldStash()
+    {
+        this.transform.position = Vector3.MoveTowards(this.transform.position, targetPoint.transform.position, movement * Time.deltaTime);
     }
 }
