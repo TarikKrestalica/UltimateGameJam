@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [Range(0, 100f)]
     [SerializeField] float rotationSpeed;
     [SerializeField] GoldPile goldPile;
-    // [SerializeField] Weapon equippedWeapon;
+    [SerializeField] GameObject equippedWeapon;
     
     private Camera mainCamera;
     private float reloadTime = 0.5f;
@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     {
         SetCurrentGoldAmount(goldAmount);
         mainCamera = Camera.main;
+        
     }
 
     // Update is called once per frame
@@ -43,6 +44,8 @@ public class Player : MonoBehaviour
             mousePosition.x - transform.position.x,
             mousePosition.y - transform.position.y);
         transform.right = direction;
+
+        equippedWeapon.SetLocalPosition(this.transform.localEulerAngles);
         
         if (Time.time - lastFireTime > reloadTime && Input.GetMouseButton(0))
         {
