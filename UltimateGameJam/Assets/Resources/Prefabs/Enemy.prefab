@@ -175,5 +175,5 @@ MonoBehaviour:
   goldAmount: 0
   deathGold: 20
   goldStealAmount: 10
-  movement: 3.5
+  movement: 0.95
   targetPoint: {fileID: 0}
