@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 4488409790124422235}
-  travelSpeed: 160
+  travelSpeed: 423
   damage: 10
 --- !u!50 &-4753459420414386082
 Rigidbody2D:

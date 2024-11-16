@@ -5,17 +5,17 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] SpriteRenderer m_spriteRenderer;
-    [Range(0, 200f)]
+    [Range(0, 1000f)]
     [SerializeField] float travelSpeed;
-    [Range(0, 10f)]
+    [Range(0, 100f)]
     [SerializeField] uint damage;
 
     Rigidbody2D rb;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        if(!rb)
+        if (!rb)
         {
             Debug.Log("Rigidbody is not attached!");
             return;
@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collider)
     {
-        if(collider.gameObject.tag == "Enemy")
+        if (collider.gameObject.tag == "Enemy")
         {
             OnEnemyCollision();
         }
