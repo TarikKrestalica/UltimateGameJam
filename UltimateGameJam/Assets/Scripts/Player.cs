@@ -13,31 +13,46 @@ public class Player : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] GoldPile goldPile;
     // [SerializeField] Weapon equippedWeapon;
+    
+    private Camera mainCamera;
 
-    void Start()
+    private void Start()
     {
         SetCurrentGoldAmount(goldAmount);
+        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        Vector3 curRotation = this.transform.localEulerAngles;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            curRotation.z -= rotationSpeed * Time.deltaTime;
-        }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            curRotation.z += rotationSpeed * Time.deltaTime;
-        }
+        // Vector3 curRotation = this.transform.localEulerAngles;
         
-        this.transform.localEulerAngles = curRotation;
+        // Converting the mouse position to a point in 3D-space
+        var mousePosition = Input.mousePosition;
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-        if(Input.GetMouseButtonDown(0))
+        Vector2 direction = new Vector2(
+            mousePosition.x - transform.position.x,
+            mousePosition.y - transform.position.y);
+
+        transform.right = direction;
+        
+        
+        // if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        // {
+        //     curRotation.z -= rotationSpeed * Time.deltaTime;
+        // }
+        // else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        // {
+        //     curRotation.z += rotationSpeed * Time.deltaTime;
+        // }
+        
+        // this.transform.localEulerAngles = curRotation;
+
+        if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Fire bullet!");
             Instantiate(GameManager.projectile, GameManager.player.transform.position + GameManager.player.transform.right * 1.2f, GameManager.player.transform.rotation);
+            Debug.Log("Fire bullet!");
         }
     }
 
