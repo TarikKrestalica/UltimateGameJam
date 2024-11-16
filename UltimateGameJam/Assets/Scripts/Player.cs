@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using ExtensionMethods;
 using UnityEngine;
 using TMPro;
 
@@ -7,8 +8,10 @@ public class Player : MonoBehaviour
 {
     [SerializeField] uint goldAmount;
     [SerializeField] TMP_Text goldAmountTxt;
+    
     [Range(0, 100f)]
     [SerializeField] float rotationSpeed;
+    [SerializeField] GoldPile goldPile;
     // [SerializeField] Weapon equippedWeapon;
 
     void Start()
@@ -28,6 +31,9 @@ public class Player : MonoBehaviour
         {
             curRotation.z += rotationSpeed * Time.deltaTime;
         }
+        
+        // TODO:DELETE
+        SetCurrentGoldAmount(goldAmount);
 
         this.transform.localEulerAngles = curRotation;
 
@@ -46,6 +52,7 @@ public class Player : MonoBehaviour
     void SetCurrentGoldAmount(uint goldAmt)
     {
         goldAmountTxt.text = $"Coins: {goldAmount}";
+        goldPile.UpdateSprite(goldAmt);
     }
 
     // Enemy collision.
