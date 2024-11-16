@@ -25,6 +25,7 @@ public class EnemySpawner : MonoBehaviour
         if(!GameManager.waveManager.TimeRemaining())
         {
             curDelay = 0;
+            AdjustSpawningParameters(GameManager.waveManager.GetWaveCount());
             return;
         }
 
@@ -56,5 +57,19 @@ public class EnemySpawner : MonoBehaviour
             playerTransform.position.y + Mathf.Sin(angle) * radius,
             playerTransform.position.z
         );
+    }
+
+    void AdjustSpawningParameters(int waveCount)
+    {
+        switch(waveCount)
+        {
+            case 3:
+                enemySpawnRate = 2;
+                timeDelay -= 1;
+                maxRadius -= .75f;
+                break;
+            default:
+                break;
+        }
     }
 }
