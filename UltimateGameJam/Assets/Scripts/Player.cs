@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     // [SerializeField] Weapon equippedWeapon;
     
     private Camera mainCamera;
+    private float reloadTime = 0.5f;
+    private float lastFireTime = 0f;
 
     private void Start()
     {
@@ -31,26 +33,14 @@ public class Player : MonoBehaviour
         var mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-        Vector2 direction = new Vector2(
+        var direction = new Vector2(
             mousePosition.x - transform.position.x,
             mousePosition.y - transform.position.y);
-
         transform.right = direction;
         
-        
-        // if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        // {
-        //     curRotation.z -= rotationSpeed * Time.deltaTime;
-        // }
-        // else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        // {
-        //     curRotation.z += rotationSpeed * Time.deltaTime;
-        // }
-        
-        // this.transform.localEulerAngles = curRotation;
-
-        if (Input.GetMouseButtonDown(0))
+        if (Time.time - lastFireTime > reloadTime && Input.GetMouseButton(0))
         {
+            lastFireTime = Time.time;
             Instantiate(GameManager.projectile, GameManager.player.transform.position + GameManager.player.transform.right * 1.2f, GameManager.player.transform.rotation);
             Debug.Log("Fire bullet!");
         }
@@ -70,7 +60,7 @@ public class Player : MonoBehaviour
     // Enemy collision.
     public void TakeDamageToGoldStash(uint amt)
     {
-        if(goldAmount - amt <= 0)
+        if (goldAmount - amt <= 0)
         {
             OnDeath();
         }
