@@ -72,8 +72,4 @@ public class WaveManager : MonoBehaviour
         return currentTime > 0;
     } 
 
-    
-
-
-
 }

@@ -822,7 +822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfWaves: 25
-  timeLimitPerWave: 30
+  timeLimitPerWave: 10
   waveTracker: {fileID: 1097493002}
   timeTracker: {fileID: 1184919957}
 --- !u!1 &881471126
@@ -1417,7 +1417,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.47
+  orthographic size: 3.5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

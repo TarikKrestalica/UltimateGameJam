@@ -63,10 +63,30 @@ public class EnemySpawner : MonoBehaviour
     {
         switch(waveCount)
         {
-            case 3:
-                enemySpawnRate = 2;
+            case 2:
+                enemySpawnRate *= 2;
                 timeDelay -= 1;
                 maxRadius -= .75f;
+                break;
+            case 4:
+                enemySpawnRate *= 2;
+                timeDelay -= .5f;
+                maxRadius -= .25f;
+                break;
+            case 6:
+                enemySpawnRate += 2;
+                timeDelay -= .5f;
+                maxRadius -= .25f;
+                break;
+            case 8:
+                enemySpawnRate += 2;
+                timeDelay -= .2f;
+                maxRadius -= .25f;
+                break;
+            case 10:
+                enemySpawnRate *= 2;
+                timeDelay -= .3f;
+                maxRadius -= .25f;
                 break;
             default:
                 break;
