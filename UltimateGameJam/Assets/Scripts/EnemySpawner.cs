@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine;
-
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] GameObject enemyPrefab;   
@@ -12,11 +10,36 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] int numberOfEnemies = 10; 
     [SerializeField] Transform playerTransform;
 
-    void Start() => SpawnEnemiesAroundPlayer();
+    [Range(0, 10f)]
+    [SerializeField] float timeDelay;
+
+    float curDelay;
+
+    [Range(1, 10)]
+    [SerializeField] int enemySpawnRate; 
+
+    void Start() => curDelay = timeDelay;
+
+    void Update()
+    {
+        if(!GameManager.waveManager.TimeRemaining())
+        {
+            curDelay = 0;
+            return;
+        }
+
+        if(curDelay >= timeDelay)
+        {
+            SpawnEnemiesAroundPlayer();
+            curDelay = 0;
+        }
+
+        curDelay += Time.deltaTime;
+    }
 
     void SpawnEnemiesAroundPlayer()
     {
-        for (int i = 0; i < numberOfEnemies; i++)
+        for (int i = 0; i < enemySpawnRate; i++)
         {
             Vector3 spawnPosition = GetRandomPositionInRing();
             Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);

@@ -46,6 +46,32 @@ public class GameManager : MonoBehaviour
 
     private GameObject m_projectile;
 
+    public static WaveManager waveManager{
+        get{
+            if(gameManager.m_waveManager == null)
+            {
+                gameManager.m_waveManager = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveManager>();
+            }
+
+            return gameManager.m_waveManager;
+        }
+    }
+
+    private WaveManager m_waveManager;
+
+    public static EnemySpawner enemyManager{
+        get{
+            if(gameManager.m_enemySpawner == null)
+            {
+                gameManager.m_enemySpawner = GameObject.FindGameObjectWithTag("EnemyManager").GetComponent<EnemySpawner>();
+            }
+
+            return gameManager.m_enemySpawner;
+        }
+    }
+
+    private EnemySpawner m_enemySpawner;
+
     void Start()
     {
         if(gameManager != null)

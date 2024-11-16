@@ -23,16 +23,17 @@ public class Projectile : MonoBehaviour
         rb.AddForce(this.transform.right * travelSpeed);
     }
 
-    public void OnEnemyCollision() // Death logic for enemy
+    public void OnEnemyCollision(Enemy enemy) // Death logic for enemy
     {
-        GameManager.enemy.TakeDamage(damage);
+        enemy.TakeDamage(damage);
     }
 
     private void OnCollisionEnter2D(Collision2D collider)
     {
         if (collider.gameObject.tag == "Enemy")
         {
-            OnEnemyCollision();
+            Enemy e = collider.gameObject.GetComponent<Enemy>();
+            OnEnemyCollision(e);
         }
 
         Destroy(this.gameObject);
