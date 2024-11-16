@@ -6,6 +6,12 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
+    public uint GoldAmount
+    {
+        get => goldAmount;
+        set => goldAmount = value;
+    }
+    
     [SerializeField] uint goldAmount;
     [SerializeField] TMP_Text goldAmountTxt;
     
