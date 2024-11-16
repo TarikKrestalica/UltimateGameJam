@@ -32,9 +32,6 @@ public class Player : MonoBehaviour
             curRotation.z += rotationSpeed * Time.deltaTime;
         }
         
-        // TODO:DELETE
-        SetCurrentGoldAmount(goldAmount);
-
         this.transform.localEulerAngles = curRotation;
 
         if(Input.GetMouseButtonDown(0))
