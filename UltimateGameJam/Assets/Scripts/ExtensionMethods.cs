@@ -47,16 +47,15 @@ namespace ExtensionMethods
         public static Vector3 Position      (this MonoBehaviour mono)                            => mono.transform.position;
         public static Vector3 GlobalScale   (this MonoBehaviour mono)                            => mono.transform.lossyScale;
         public static Quaternion Rotation   (this MonoBehaviour mono)                            => mono.transform.rotation;
-        public static Transform GetTransform(this MonoBehaviour mono)                            => new Transform(mono.transform.position, mono.transform.rotation, mono.transform.localScale);
         public static void DetatchLastChild (this MonoBehaviour mono)                            => mono.GetChild(mono.transform.childCount - 1).transform.parent = null;
         public static void DetatchChild     (this MonoBehaviour mono, int child)                 => mono.GetChild(child).transform.parent = null;
         public static GameObject GetChild   (this MonoBehaviour mono, int index)                 => mono.gameObject.transform.GetChild(index).gameObject;
         public static GameObject GetChild   (this MonoBehaviour mono, int index, int grandIndex) => mono.gameObject.transform.GetChild(index).GetChild(grandIndex).gameObject;
         public static void SetTransform     (this MonoBehaviour mono, Transform transform)
         {
-            mono.SetPosition(transform.Location);
-            mono.SetRotation(transform.Rotation);
-            mono.SetLocalScale(transform.Scale);
+            mono.SetPosition(transform.position);
+            mono.SetRotation(transform.rotation);
+            mono.SetLocalScale(transform.localScale);
         }
 
         /// <summary>
@@ -207,9 +206,9 @@ namespace ExtensionMethods
         public static void DetatchChild    (this GameObject gameObj, int child)                 => gameObj.GetChild(child).transform.parent = null;
         public static void SetTransform    (this GameObject gameObj, Transform transform)
         {
-            gameObj.SetPosition(transform.Location);
-            gameObj.SetRotation(transform.Rotation);
-            gameObj.SetLocalScale(transform.Scale);
+            gameObj.SetPosition(transform.position);
+            gameObj.SetRotation(transform.rotation);
+            gameObj.SetLocalScale(transform.localScale);
         }
         
         /// <summary>
@@ -291,15 +290,6 @@ namespace ExtensionMethods
         private static IEnumerable<T> GetRestOfArray<T>(this IEnumerable<T> array, int skip) => array.Skip(skip).ToArray();
         private static T GetElement<T>(this IEnumerable<T> en, int index) => index >= en.Count() ? default(T) : en.ElementAt(index);
     }
-    public static class MiscExt
-    {
-        public static bool ContainsTile(this List<(PlayerTile, Direction)> list, PlayerTile tile)
-        {
-            foreach (var (t, d) in list)
-                if (t == tile) return true;
-            return false;
-        }
-    }
     public static class ObjectExt
     {
         public static void NullCheck(this object obj)         => Debug.Log("Object is " + (obj == null ? "" : "not ") + "null");
@@ -307,7 +297,6 @@ namespace ExtensionMethods
         public static void Log(this object obj, string name)  => Debug.Log($"{name}: {obj}");
         public static void Log(this object obj, object item)  => Debug.Log($"{item.ToString()}: {obj}");
         public static bool RefEquals(this object a, object b) => ReferenceEquals(a, b);
-        public static string Pair(this object obj, params object[] objects) => PathDebugger.Pair(obj, objects);
         public static (T CastedItem, bool Success) CastTo<T>(this object obj)
         {
             try   { return ((T)obj, true); }
@@ -416,7 +405,6 @@ namespace ExtensionMethods
     }
     public static class TransformExt
     {
-        public static Transform ToTransform(this UnityEngine.Transform transform) => new Transform(transform.position, transform.rotation, transform.localScale);
         public static T Get<T>(this UnityEngine.Transform transform)              => transform.GetComponent<T>();
     }
     public static class StringExt
