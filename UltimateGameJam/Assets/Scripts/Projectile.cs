@@ -16,8 +16,16 @@ public class Projectile : MonoBehaviour
         
     }
 
-    public void OnEnemyCollision()
+    public void OnEnemyCollision() // Death logic for enemy
     {
-        
+        GameManager.enemy.OnDeath();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collider)
+    {
+        if(collider.gameObject.tag == "Enemy")
+        {
+            OnEnemyCollision();
+        }
     }
 }

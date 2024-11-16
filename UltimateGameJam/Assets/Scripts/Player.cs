@@ -20,14 +20,25 @@ public class Player : MonoBehaviour
         
     }
 
-    public virtual void OnDeath()
+    public virtual void OnDeath() 
     {
-        
+        Debug.Log("Game Over Logic here!");
     }
 
     void SetCurrentGoldAmount(uint goldAmt)
     {
-        goldAmount = goldAmt;
         goldAmountTxt.text = $"Coins: {goldAmount}";
+    }
+
+    // Enemy collision.
+    public void TakeDamageToGoldStash(uint amt)
+    {
+        if(goldAmount - amt <= 0)
+        {
+            OnDeath();
+        }
+
+        goldAmount -= amt;
+        SetCurrentGoldAmount(goldAmount);
     }
 }

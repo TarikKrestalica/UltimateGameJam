@@ -7,7 +7,7 @@ public abstract class Consumable : MonoBehaviour
 {
     public void Consume()
     {
-        Consume();
+        OnConsume();
         DecrementCount();
     }
     protected abstract void OnConsume();
