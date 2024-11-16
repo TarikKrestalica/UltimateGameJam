@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] uint goldAmount;
+    [SerializeField] uint deathGold;
+    [SerializeField] uint goldStealAmount;
+    [Range(0, 10f)]
+    [SerializeField] float movement;
+
+
+    public virtual void OnDeath()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void OnStealGold()
     {
-        
+
     }
 }
