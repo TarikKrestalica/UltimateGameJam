@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Projectile : MonoBehaviour
 {
     [SerializeField] SpriteRenderer m_spriteRenderer;
+    
     [Range(0, 1000f)]
     [SerializeField] float travelSpeed;
-    [Range(0, 100f)]
-    [SerializeField] uint damage;
+
+    [SerializeField] public uint Damage { get; set; } = 10;
 
     Rigidbody2D rb;
 
@@ -25,7 +27,7 @@ public class Projectile : MonoBehaviour
 
     public void OnEnemyCollision() // Death logic for enemy
     {
-        GameManager.enemy.TakeDamage(damage);
+        GameManager.enemy.TakeDamage(Damage);
     }
 
     private void OnCollisionEnter2D(Collision2D collider)

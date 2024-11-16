@@ -9,9 +9,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] uint goldAmount;
     [SerializeField] uint deathGold;
     [SerializeField] uint goldStealAmount;
+    
     [Range(0, 10f)]
     [SerializeField] float movement;
-
     [SerializeField] GameObject targetPoint;
 
     private Vector3 startingPoint;

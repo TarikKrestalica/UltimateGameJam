@@ -38,8 +38,6 @@ public class Player : MonoBehaviour
             mousePosition.y - transform.position.y);
         transform.right = direction;
         
-        
-        
         if (Time.time - lastFireTime > reloadTime && Input.GetMouseButton(0))
         {
             lastFireTime = Time.time;
