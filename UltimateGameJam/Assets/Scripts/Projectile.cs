@@ -1,14 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using ExtensionMethods;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
     [SerializeField] SpriteRenderer m_spriteRenderer;
+    
     [Range(0, 1000f)]
     [SerializeField] float travelSpeed;
-    [Range(0, 100f)]
-    [SerializeField] uint damage;
+
+    public static uint Damage = 10;
+
+    private float startTime = 0;
 
     Rigidbody2D rb;
 
@@ -21,11 +26,18 @@ public class Projectile : MonoBehaviour
             return;
         }
         rb.AddForce(this.transform.right * travelSpeed);
+        startTime = Time.time;
+    }
+
+    private void Update()
+    {
+        if (Time.time - startTime >= 5.0)
+            this.Destroy();
     }
 
     public void OnEnemyCollision(Enemy enemy) // Death logic for enemy
     {
-        enemy.TakeDamage(damage);
+        enemy.TakeDamage(Damage);
     }
 
     private void OnCollisionEnter2D(Collision2D collider)

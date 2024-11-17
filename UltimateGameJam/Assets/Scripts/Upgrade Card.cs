@@ -1,29 +1,88 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using ExtensionMethods;
+using TMPro;
 using UnityEngine;
 
-public class UpgradeItem : MonoBehaviour
+enum UpgradeType
 {
+    Damage, Reload
+}
+
+public class UpgradeCard : MonoBehaviour
+{
+    #region Variables
+    [Header("Text Components")]
     [SerializeField] TMP_Text levelText;
     [SerializeField] TMP_Text costText;
     [SerializeField] TMP_Text currentValueText;
     [SerializeField] TMP_Text nextValueText;
 
+    [Space]
+    [Header("Upgrade Data")]
     [SerializeField] int level;
     [SerializeField] int cost;
-    [SerializeField] int currentValue;
-    [SerializeField] int nextValue;
+    [SerializeField] float currentValue;
+    [SerializeField] UpgradeType upgradeType;
+
+    [Space]
+    [Header("Upgrade Multipliers")]
+    [SerializeField] float costMultiplier = 1.75f;
+    [SerializeField] float nextValueMultiplier = 1.5f;
+
+    [Space]
+    [Header("Formatting Options")]
+    [SerializeField] bool useDecimals = false;
+    [SerializeField] string suffix = "";
+    #endregion
+    
+    private float nextValue;
+    private Player player;
+
+    private void Start()
+    {
+        nextValue = GetNewNextCost();
+        player = GameObject.FindWithTag("Player").Get<Player>();       
+        UpdateUI();
+    }
 
     public void UpdateUI()
     {
         levelText.text = $"Level {level}";
         costText.text = $"${cost}";
-        currentValueText.text = currentValue.ToString("0.00");
-        nextValueText.text = nextValue.ToString("0.00");
+        currentValueText.text = FormatValue(currentValue);
+        nextValueText.text = FormatValue(nextValue);
     }
+    
+    
+    private string FormatValue(float value) => $"{value.ToString(useDecimals ? "0.00" : "0")}{suffix}";
+
+    private float GetNewCost() => cost * costMultiplier;
+    private float GetNewNextCost() => currentValue * nextValueMultiplier;
 
     public void OnUpgradeClicked()
     {
-        // Logic for upgrading, e.g., checking player currency and applying the upgrade
+        if (player.GoldAmount < cost)
+            return;
+        player.GoldAmount -= (uint)cost;
+        
+        level++;
+        currentValue = nextValue;
+        (nextValue, cost) = (GetNewNextCost(), (int)GetNewCost());
+
+        switch (upgradeType)
+        {
+            case UpgradeType.Damage:
+                Projectile.Damage = (uint)nextValue;
+                break;
+            case UpgradeType.Reload:
+                player.ReloadTime = nextValue;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+        UpdateUI();
     }
 }

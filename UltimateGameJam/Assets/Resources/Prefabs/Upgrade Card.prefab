@@ -254,7 +254,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4451679921784206480}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1899625519955495279}
+        m_TargetAssemblyTypeName: UpgradeCard, Assembly-CSharp
+        m_MethodName: OnUpgradeClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1178229633908045894
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +322,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f5fbde25559ec46941bf56c6d3cf28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelText: {fileID: 1297117529675770104}
+  costText: {fileID: 2123735651664835476}
+  currentValueText: {fileID: 7855566696749715239}
+  nextValueText: {fileID: 4623566525297364198}
+  level: 1
+  cost: 400
+  currentValue: 1
+  costMultiplier: 1.75
+  nextValueMultiplier: 1.5
+  useDecimals: 0
+  suffix: 
 --- !u!1 &1572050856577985466
 GameObject:
   m_ObjectHideFlags: 0

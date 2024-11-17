@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ExtensionMethods;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
         get => goldAmount;
         set => goldAmount = value;
     }
+    public float ReloadTime = 0.5f;
     
     [SerializeField] uint goldAmount;
     [SerializeField] TMP_Text goldAmountTxt;
@@ -21,7 +23,6 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject equippedWeapon;
     
     private Camera mainCamera;
-    private float reloadTime = 0.5f;
     private float lastFireTime = 0f;
 
     private void Start()
@@ -47,15 +48,19 @@ public class Player : MonoBehaviour
 
         equippedWeapon.SetLocalPosition(this.transform.localEulerAngles);
         
-        if (Time.time - lastFireTime > reloadTime && Input.GetMouseButton(0))
+        if (Time.time - lastFireTime > ReloadTime && Input.GetMouseButton(0))
         {
             lastFireTime = Time.time;
-            Instantiate(GameManager.projectile, GameManager.player.transform.position + GameManager.player.transform.right * 1.2f, GameManager.player.transform.rotation);
+            Instantiate(
+                GameManager.projectile, 
+                GameManager.player.transform.position + GameManager.player.transform.right * 1.2f, 
+                GameManager.player.transform.rotation);
+
             Debug.Log("Fire bullet!");
         }
     }
 
-    public virtual void OnDeath() 
+    private void OnDeath() 
     {
         Debug.Log("Game Over Logic here!");
     }
