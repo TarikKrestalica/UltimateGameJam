@@ -11,7 +11,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] uint numberOfWaves;
 
     [Range(0, 240f)]
-    [SerializeField] float timeLimitPerWave;
+    public float timeLimitPerWave;
     float currentTime;
 
     int currentWaveCount;

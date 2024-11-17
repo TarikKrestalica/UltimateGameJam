@@ -56,7 +56,6 @@ public class UpgradeCard : MonoBehaviour
         nextValueText.text = FormatValue(nextValue);
     }
     
-    
     private string FormatValue(float value) => $"{prefix}{value.ToString(useDecimals ? "0.00" : "0")}{suffix}";
 
     private float GetNewCost() => cost * costMultiplier;

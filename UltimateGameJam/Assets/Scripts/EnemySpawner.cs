@@ -1,41 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using ExtensionMethods;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] GameObject enemyPrefab;   
-    [SerializeField] float minRadius = 3f;     
-    [SerializeField] float maxRadius = 8f;     
+    [SerializeField] float minRadius = 7f;     
+    [SerializeField] float maxRadius = 15f;     
     [SerializeField] int numberOfEnemies = 10; 
     [SerializeField] Transform playerTransform;
 
-    [Range(0, 10f)]
-    [SerializeField] float timeDelay;
+    private int enemySpawnRate = 2;
 
-    float curDelay;
 
-    [Range(1, 10)]
-    [SerializeField] int enemySpawnRate; 
-
-    void Start() => curDelay = timeDelay;
+    private void Start()
+    {
+        SpawnEnemiesAroundPlayer();
+    }
 
     void Update()
     {
-        if(!GameManager.waveManager.TimeRemaining())
+        if (!GameManager.waveManager.TimeRemaining())
         {
-            curDelay = 0;
             AdjustSpawningParameters(GameManager.waveManager.GetWaveCount());
-            return;
-        }
-
-        if(curDelay >= timeDelay)
-        {
             SpawnEnemiesAroundPlayer();
-            curDelay = 0;
         }
-
-        curDelay += Time.deltaTime;
     }
 
     void SpawnEnemiesAroundPlayer()
@@ -61,35 +53,6 @@ public class EnemySpawner : MonoBehaviour
 
     void AdjustSpawningParameters(int waveCount)
     {
-        switch(waveCount)
-        {
-            case 2:
-                enemySpawnRate *= 2;
-                timeDelay -= 1;
-                maxRadius -= .75f;
-                break;
-            case 4:
-                enemySpawnRate *= 2;
-                timeDelay -= .5f;
-                maxRadius -= .25f;
-                break;
-            case 6:
-                enemySpawnRate += 2;
-                timeDelay -= .5f;
-                maxRadius -= .25f;
-                break;
-            case 8:
-                enemySpawnRate += 2;
-                timeDelay -= .2f;
-                maxRadius -= .25f;
-                break;
-            case 10:
-                enemySpawnRate *= 2;
-                timeDelay -= .3f;
-                maxRadius -= .25f;
-                break;
-            default:
-                break;
-        }
+        enemySpawnRate += enemySpawnRate / 8 + 1;
     }
 }
