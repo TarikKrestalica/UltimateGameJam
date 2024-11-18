@@ -21,12 +21,15 @@ public class Player : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] GoldPile goldPile;
     [SerializeField] GameObject equippedWeapon;
+
+    float currentDamage;
     
     private Camera mainCamera;
     private float lastFireTime = 0f;
 
-    private void Start()
+    private void Awake()
     {
+        currentDamage = 10f;
         SetCurrentGoldAmount(goldAmount);
         mainCamera = Camera.main;
         
@@ -87,5 +90,15 @@ public class Player : MonoBehaviour
     {
         goldAmount += amount;
         SetCurrentGoldAmount(goldAmount);
+    }
+
+    public float GetCurrentDamage()
+    {
+        return currentDamage;
+    }
+
+    public void SetCurrentDamage(float newDamage)
+    {
+        currentDamage = newDamage;
     }
 }

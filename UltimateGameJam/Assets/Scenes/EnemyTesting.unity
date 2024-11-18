@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d76a7bd197b408786cf7e0b0b12c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ReloadTime: 0.5
   goldAmount: 100
   goldAmountTxt: {fileID: 430897613}
   rotationSpeed: 50
@@ -1504,11 +1505,11 @@ RectTransform:
   - {fileID: 1948587337}
   m_Father: {fileID: 548618867}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 349, y: 158}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -106, y: -109}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1001 &1517974774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1531,7 +1532,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
       propertyPath: nextValue
-      value: 0.4
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
+      propertyPath: upgradeType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
       propertyPath: useDecimals
@@ -1540,6 +1545,14 @@ PrefabInstance:
     - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
       propertyPath: currentValue
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
+      propertyPath: costMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
+      propertyPath: nextValueMultiplier
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4613630857992717266, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
       propertyPath: m_Pivot.x
@@ -1898,7 +1911,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944203795}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1944203798
 Camera:
   m_ObjectHideFlags: 0
@@ -2359,6 +2372,14 @@ PrefabInstance:
     - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
       propertyPath: level
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
+      propertyPath: currentValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
+      propertyPath: costMultiplier
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 4613630857992717266, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
       propertyPath: m_Pivot.x

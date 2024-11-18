@@ -24,11 +24,14 @@ public class UpgradeCard : MonoBehaviour
     [SerializeField] int level;
     [SerializeField] int cost;
     [SerializeField] float currentValue;
+    [SerializeField] float maxValue;
     [SerializeField] UpgradeType upgradeType;
 
     [Space]
     [Header("Upgrade Multipliers")]
+    [Range(0, 2f)]
     [SerializeField] float costMultiplier = 1.75f;
+    [Range(0, 2f)]
     [SerializeField] float nextValueMultiplier = 1.5f;
 
     [Space]
@@ -37,13 +40,11 @@ public class UpgradeCard : MonoBehaviour
     [SerializeField] string suffix = "";
     #endregion
     
-    private float nextValue;
-    private Player player;
+    [SerializeField] private float nextValue;
 
     private void Start()
     {
-        nextValue = GetNewNextCost();
-        player = GameObject.FindWithTag("Player").Get<Player>();       
+        nextValue = currentValue * nextValueMultiplier;
         UpdateUI();
     }
 
@@ -59,25 +60,26 @@ public class UpgradeCard : MonoBehaviour
     private string FormatValue(float value) => $"{value.ToString(useDecimals ? "0.00" : "0")}{suffix}";
 
     private float GetNewCost() => cost * costMultiplier;
-    private float GetNewNextCost() => currentValue * nextValueMultiplier;
 
     public void OnUpgradeClicked()
     {
-        if (player.GoldAmount < cost)
+        if (GameManager.player.GoldAmount < cost)
             return;
-        player.GoldAmount -= (uint)cost;
+        GameManager.player.GoldAmount -= (uint)cost;
         
         level++;
+        
         currentValue = nextValue;
-        (nextValue, cost) = (GetNewNextCost(), (int)GetNewCost());
+        nextValue = currentValue * nextValueMultiplier;
+        cost = (int)GetNewCost();
 
         switch (upgradeType)
         {
             case UpgradeType.Damage:
-                Projectile.Damage = (uint)nextValue;
+                GameManager.player.SetCurrentDamage((uint)nextValue);
                 break;
             case UpgradeType.Reload:
-                player.ReloadTime = nextValue;
+                GameManager.player.ReloadTime = nextValue;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
