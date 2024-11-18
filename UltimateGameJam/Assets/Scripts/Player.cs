@@ -38,7 +38,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // Vector3 curRotation = this.transform.localEulerAngles;
         
         // Converting the mouse position to a point in 3D-space
         var mousePosition = Input.mousePosition;
@@ -58,8 +57,6 @@ public class Player : MonoBehaviour
                 GameManager.projectile, 
                 GameManager.player.transform.position + GameManager.player.transform.right * 1.2f, 
                 GameManager.player.transform.rotation);
-
-            Debug.Log("Fire bullet!");
         }
     }
 
@@ -68,7 +65,7 @@ public class Player : MonoBehaviour
         Debug.Log("Game Over Logic here!");
     }
 
-    void SetCurrentGoldAmount(uint goldAmt)
+    public void SetCurrentGoldAmount(uint goldAmt)
     {
         goldAmountTxt.text = $"Coins: {goldAmount}";
         goldPile.UpdateSprite(goldAmt);

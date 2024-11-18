@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.Mathematics;
+using System.Threading.Tasks;
 
 public class WaveManager : MonoBehaviour
 {
@@ -12,31 +13,42 @@ public class WaveManager : MonoBehaviour
 
     [Range(0, 240f)]
     [SerializeField] float timeLimitPerWave;
+
+    [Range(0, 10f)]
+    [SerializeField] uint timeDelayPerWave;
+
+    public uint TimeDelayPerWave
+    {
+        get => timeDelayPerWave;
+        set => timeDelayPerWave = value;
+    }
+
     float currentTime;
 
-    int currentWaveCount;
+    int currentWaveCount = 0;
 
     [SerializeField] TMP_Text waveTracker;
     [SerializeField] TMP_Text timeTracker;
+
+    bool hasTransitionExecuted = false;
 
     System.Random rnd;
 
     void Start() 
     {
-        ResetWaveCount();
-        currentTime = timeLimitPerWave;
+        StartCoroutine(SetUpWaveControl());
     }
 
     void Update()
     {
-        if(!TimeRemaining())
+        if(TimeRemaining())
         {
-            MoveToNextWave();
-            currentTime = timeLimitPerWave;
+            if(hasTransitionExecuted)
+            {
+                hasTransitionExecuted = false;
+            }
+            RunTheClock();
         }
-
-        RunTheClock();
-
     }
 
     void UpdateText()
@@ -44,10 +56,19 @@ public class WaveManager : MonoBehaviour
         waveTracker.text = $"Wave #{currentWaveCount}";
     }
 
+    void StopCurrentWave()
+    {
+        currentTime = 0;
+        waveTracker.gameObject.SetActive(false);
+        UpdateText();
+    }
+
     void MoveToNextWave()
     {
         currentWaveCount += 1;
         UpdateText();
+        currentTime = timeLimitPerWave;
+        waveTracker.gameObject.SetActive(true);
     }
 
     public int GetWaveCount()
@@ -72,4 +93,48 @@ public class WaveManager : MonoBehaviour
         return currentTime > 0;
     } 
 
+    void SetUpTheNextWave()
+    {
+        Debug.Log("Next Wave!");
+        StartWave();
+    }
+
+    public void StartWave()
+    {
+        GameManager.enemyManager.SpawnEnemiesAroundPlayer();
+        MoveToNextWave();
+        Debug.Log("New wave has begun!");
+    }
+
+    async void MakeTransition()
+    {
+        StopCurrentWave();
+        await Task.Delay((int)timeDelayPerWave * 1000);
+        SetUpTheNextWave();
+        hasTransitionExecuted = true;
+    }
+
+    public void SetTransitionBool(bool toggle)
+    {
+        hasTransitionExecuted = toggle;
+    }
+
+    public bool TransitionBool()
+    {
+       return hasTransitionExecuted;
+    }
+
+    public IEnumerator SetUpWaveControl()
+    {
+        if(!TimeRemaining())
+        {
+            if(!hasTransitionExecuted){
+                MakeTransition(); 
+                hasTransitionExecuted = true;
+            }      
+        }        
+
+        StopAllCoroutines();
+        yield return null;
+    }
 }

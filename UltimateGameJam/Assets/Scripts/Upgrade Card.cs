@@ -65,7 +65,9 @@ public class UpgradeCard : MonoBehaviour
     {
         if (GameManager.player.GoldAmount < cost)
             return;
+            
         GameManager.player.GoldAmount -= (uint)cost;
+        GameManager.player.SetCurrentGoldAmount( GameManager.player.GoldAmount);
         
         level++;
         
@@ -84,7 +86,7 @@ public class UpgradeCard : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        
+
         UpdateUI();
     }
 }

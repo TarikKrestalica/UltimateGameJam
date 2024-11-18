@@ -21,11 +21,14 @@ public class EnemySpawner : MonoBehaviour
     void Start() => curDelay = timeDelay;
 
     void Update()
-    {
+    {   
         if(!GameManager.waveManager.TimeRemaining())
         {
+            if(!GameManager.waveManager.TransitionBool())
+            {
+                StartCoroutine(GameManager.waveManager.SetUpWaveControl());
+            }
             curDelay = 0;
-            AdjustSpawningParameters(GameManager.waveManager.GetWaveCount());
             return;
         }
 
@@ -38,13 +41,13 @@ public class EnemySpawner : MonoBehaviour
         curDelay += Time.deltaTime;
     }
 
-    void SpawnEnemiesAroundPlayer()
+    public void SpawnEnemiesAroundPlayer()
     {
         for (int i = 0; i < enemySpawnRate; i++)
         {
             Vector3 spawnPosition = GetRandomPositionInRing();
             Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        }
+        }  
     }
 
     Vector3 GetRandomPositionInRing()
@@ -92,4 +95,5 @@ public class EnemySpawner : MonoBehaviour
                 break;
         }
     }
+
 }
