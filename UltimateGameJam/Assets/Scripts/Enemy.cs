@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,7 +6,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] uint health;
+    private float startingHealth;
+    [SerializeField] float health;
     [SerializeField] uint goldAmount;
     [SerializeField] uint deathGold;
     [SerializeField] uint goldStealAmount;
@@ -14,10 +16,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] float movement;
     [SerializeField] GameObject targetPoint;
 
+    [SerializeField] GameObject healthBar;
+
     private Vector3 startingPoint;
 
     void Start()
     {
+        startingHealth = health;
         targetPoint = GameObject.FindGameObjectWithTag("Player");
         startingPoint = this.transform.position;
     }
@@ -37,10 +42,12 @@ public class Enemy : MonoBehaviour
     {
         if(health - damage_amt <= 0)
         {
+            ModifyItsHealthBar();
             OnDeath();
         }
-
+        
         health -= damage_amt;
+        ModifyItsHealthBar();
     }
 
     public virtual void OnDeath()
@@ -72,5 +79,13 @@ public class Enemy : MonoBehaviour
         {
             OnStealGold(this.gameObject);
         }
+    }
+
+    void ModifyItsHealthBar()
+    {
+        // HealthBar mod.
+        float percentage = (float)(health / startingHealth);
+        Vector3 newScale = new Vector3(percentage, .2f, 1);
+        healthBar.transform.localScale = newScale;
     }
 }
