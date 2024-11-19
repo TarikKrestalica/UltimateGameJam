@@ -10,8 +10,13 @@ public class Player : MonoBehaviour
     public uint GoldAmount
     {
         get => goldAmount;
-        set => goldAmount = value;
+        set
+        {
+            goldAmount = value;
+            UpdateGoldUI();
+        }
     }
+
     public float ReloadTime = 0.5f;
     
     [SerializeField] uint goldAmount;
@@ -27,9 +32,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        SetCurrentGoldAmount(goldAmount);
+        UpdateGoldUI();
         mainCamera = Camera.main;
-        
     }
 
     // Update is called once per frame
@@ -55,8 +59,6 @@ public class Player : MonoBehaviour
                 GameManager.projectile, 
                 GameManager.player.transform.position + GameManager.player.transform.right * 1.2f, 
                 GameManager.player.transform.rotation);
-
-            Debug.Log("Fire bullet!");
         }
     }
 
@@ -65,10 +67,10 @@ public class Player : MonoBehaviour
         Debug.Log("Game Over Logic here!");
     }
 
-    void SetCurrentGoldAmount(uint goldAmt)
+    void UpdateGoldUI()
     {
         goldAmountTxt.text = $"Coins: {goldAmount}";
-        goldPile.UpdateSprite(goldAmt);
+        goldPile.UpdateSprite(goldAmount);
     }
 
     // Enemy collision.
@@ -79,13 +81,11 @@ public class Player : MonoBehaviour
             OnDeath();
         }
 
-        goldAmount -= amt;
-        SetCurrentGoldAmount(goldAmount);
+        GoldAmount -= amt;
     }
 
     public void AddGold(uint amount)
     {
-        goldAmount += amount;
-        SetCurrentGoldAmount(goldAmount);
+        GoldAmount += amount;
     }
 }

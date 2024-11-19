@@ -16,11 +16,11 @@ public class GoldPile : MonoBehaviour
         spriteRenderer.sprite = goldAmount switch
         {
             0      => sprites[0],
-            < 100  => sprites[1],
-            < 400  => sprites[2],
-            < 800  => sprites[3],
-            < 1600 => sprites[4],
-            < 3200 => sprites[5],
+            < 200  => sprites[1],
+            < 800  => sprites[2],
+            < 1600  => sprites[3],
+            < 3200 => sprites[4],
+            < 6400 => sprites[5],
             _      => sprites[6],
         };
     }
