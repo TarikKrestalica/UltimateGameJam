@@ -38,15 +38,15 @@ public class Enemy : MonoBehaviour
         RunBack();
     }
 
-    public void TakeDamage(uint damage_amt)
+    public void TakeDamage(uint new_damage_amt)
     {
-        if(health - damage_amt <= 0)
+        if(health - new_damage_amt <= 0)
         {
             ModifyItsHealthBar();
             OnDeath();
         }
         
-        health -= damage_amt;
+        health -= new_damage_amt;
         ModifyItsHealthBar();
     }
 

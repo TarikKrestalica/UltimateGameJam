@@ -78,7 +78,7 @@ public class UpgradeCard : MonoBehaviour
         switch (upgradeType)
         {
             case UpgradeType.Damage:
-                GameManager.player.SetCurrentDamage((uint)nextValue);
+                Projectile.Damage = (uint)nextValue;
                 break;
             case UpgradeType.Reload:
                 GameManager.player.ReloadTime = nextValue;

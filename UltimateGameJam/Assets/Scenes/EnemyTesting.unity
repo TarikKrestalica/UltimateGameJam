@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReloadTime: 0.5
-  goldAmount: 100
+  goldAmount: 400
   goldAmountTxt: {fileID: 430897613}
   rotationSpeed: 50
   goldPile: {fileID: 2118935152}
@@ -704,7 +704,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -189, y: -294}
+  m_AnchoredPosition: {x: -188.99997, y: -294}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &751255113
