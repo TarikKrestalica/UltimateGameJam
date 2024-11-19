@@ -81,6 +81,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2dD(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "GoldPile")
+        {
+            OnStealGold(this.gameObject);
+        }
+    }
+
     void ModifyItsHealthBar()
     {
         // HealthBar mod.
