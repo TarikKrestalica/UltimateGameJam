@@ -7,7 +7,7 @@ using UnityEngine;
 
 enum UpgradeType
 {
-    Damage, Reload
+    Damage, Reload, GoldBoost
 }
 
 public class UpgradeCard : MonoBehaviour
@@ -38,6 +38,7 @@ public class UpgradeCard : MonoBehaviour
     [Header("Formatting Options")]
     [SerializeField] bool useDecimals = false;
     [SerializeField] string suffix = "";
+    [SerializeField] string prefix = "";
     #endregion
     
     [SerializeField] private float nextValue;
@@ -57,7 +58,7 @@ public class UpgradeCard : MonoBehaviour
     }
     
     
-    private string FormatValue(float value) => $"{value.ToString(useDecimals ? "0.00" : "0")}{suffix}";
+    private string FormatValue(float value) => $"{prefix}{value.ToString(useDecimals ? "0.00" : "0")}{suffix}";
 
     private float GetNewCost() => cost * costMultiplier;
 
@@ -82,6 +83,9 @@ public class UpgradeCard : MonoBehaviour
                 break;
             case UpgradeType.Reload:
                 GameManager.player.ReloadTime = nextValue;
+                break;
+            case UpgradeType.GoldBoost:
+                Enemy.GoldBoost = nextValue;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

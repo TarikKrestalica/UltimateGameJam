@@ -1732,6 +1732,10 @@ PrefabInstance:
       value: Money Boost
       objectReference: {fileID: 0}
     - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
+      propertyPath: cost
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
       propertyPath: suffix
       value: s
       objectReference: {fileID: 0}
@@ -1749,7 +1753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
       propertyPath: currentValue
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1899625519955495279, guid: 49588161defd5a843a3ea0eb4b6473a5, type: 3}
       propertyPath: costMultiplier
@@ -1978,7 +1982,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 53, y: -39.7}
+  m_AnchoredPosition: {x: 53, y: -39.699997}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1829938301
