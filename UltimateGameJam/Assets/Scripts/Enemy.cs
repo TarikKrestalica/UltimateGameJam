@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,9 +13,11 @@ public class Enemy : MonoBehaviour
     
     [Range(0, 10f)]
     [SerializeField] float movement;
-    [SerializeField] GameObject targetPoint;
+    GameObject targetPoint;
 
     [SerializeField] GameObject healthBar;
+
+    [SerializeField] NavMeshAgent agent;
 
     private Vector3 startingPoint;
 
@@ -25,17 +26,25 @@ public class Enemy : MonoBehaviour
         startingHealth = health;
         targetPoint = GameObject.FindGameObjectWithTag("Player");
         startingPoint = this.transform.position;
+
+        if(!agent)
+        {
+            Debug.LogError("Navmesh Not found!");
+            return;
+        }
+		agent.updateRotation = false;
+		agent.updateUpAxis = false;
     }
 
     void Update()
     {
-        if(targetPoint)
+        if(!agent.isOnNavMesh)
         {
-            MoveToGoldStash();
+            Debug.LogError("NavMesh Not found!");
             return;
         }
 
-        RunBack();
+        agent.SetDestination(targetPoint.transform.position);
     }
 
     public void TakeDamage(uint new_damage_amt)

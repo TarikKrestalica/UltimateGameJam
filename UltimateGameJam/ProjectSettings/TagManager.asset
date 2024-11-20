@@ -9,6 +9,7 @@ TagManager:
   - WaveManager
   - EnemyManager
   - Background
+  - NavMesh
   layers:
   - Default
   - TransparentFX
