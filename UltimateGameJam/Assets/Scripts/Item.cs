@@ -1,51 +1,69 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Item : MonoBehaviour
 {
     [Range(0, 40f)]
     [SerializeField] private float rotSpeed;
 
-    private bool hasClicked = false;
-    private Vector3 offset; 
+    private bool isMouseOver = false;
+    private bool isDragging = false;
+    private Vector3 offset;
+    private Collider2D collider;
 
-    void Update()
+    private void Start() => collider = GetComponent<Collider2D>();
+
+    private void Update()
     {
-        if (!hasClicked)
+        DetectMouseOver();
+
+        if (Input.GetMouseButtonDown(0) && isMouseOver)
+            OnMouseDown();
+        if (Input.GetMouseButtonUp(0) && isDragging)
+            OnMouseUp();
+        if (isDragging)
+            HandleRotation();
+    }
+
+    private void DetectMouseOver()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0f; // Ignore Z-axis for 2D
+
+        isMouseOver = collider.bounds.Contains(mousePosition);
+    }
+
+    private void OnMouseDown()
+    {
+        (isDragging, collider.enabled) = (true, false);
+
+        // Calculate offset
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = transform.position.z;
+        offset = transform.position - mousePosition;
+    }
+
+    private void OnMouseUp() => (isDragging, collider.enabled) = (false, true);
+
+    private void HandleRotation()
+    {
+        Vector3 curRot = transform.localEulerAngles;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            curRot.z -= Time.deltaTime * rotSpeed;
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            curRot.z += Time.deltaTime * rotSpeed;
+
+        transform.localEulerAngles = curRot;
+    }
+
+    private void OnMouseDrag()
+    {
+        if (!isDragging) 
             return;
 
-        // Handle rotation
-        Vector3 curRot = this.transform.localEulerAngles;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            curRot.z -= Time.deltaTime * rotSpeed;
-        }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            curRot.z += Time.deltaTime * rotSpeed;
-        }
-
-        this.transform.localEulerAngles = curRot;
-    }
-
-    public void OnBeginDrag(BaseEventData data)
-    {
-        PointerEventData pointerData = (PointerEventData)data;
-        Vector3 objectScreenPosition = Camera.main.WorldToScreenPoint(this.transform.position);
-        offset = this.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(pointerData.position.x, pointerData.position.y, objectScreenPosition.z));
-    }
-
-    public void OnDrag(BaseEventData data)
-    {
-        PointerEventData pointerData = (PointerEventData)data;
-        Vector3 pointerWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(pointerData.position.x, pointerData.position.y, Camera.main.WorldToScreenPoint(this.transform.position).z));
-        this.transform.position = pointerWorldPosition + offset;
-    }
-
-    public void ModifyClicked()
-    {
-        hasClicked = !hasClicked;
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = transform.position.z; // Maintain original Z position
+        transform.position = mousePosition + offset;
     }
 }
