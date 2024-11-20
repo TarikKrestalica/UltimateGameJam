@@ -11,10 +11,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] uint goldAmount;
     [SerializeField] uint deathGold;
     [SerializeField] uint goldStealAmount;
-    
-    [Range(0, 10f)]
-    [SerializeField] float movement;
-    GameObject targetPoint;
+
+    [SerializeField] GameObject targetPoint;
 
     [SerializeField] GameObject healthBar;
 
@@ -25,7 +23,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         startingHealth = health;
-        targetPoint = GameObject.FindGameObjectWithTag("Player");
+        targetPoint = GameObject.FindGameObjectWithTag("Target");
         startingPoint = this.transform.position;
 
         if(!agent)
@@ -71,16 +69,6 @@ public class Enemy : MonoBehaviour
     {
         GameManager.player.TakeDamageToGoldStash(goldStealAmount);
         Destroy(g.gameObject); // For now.
-    }
-
-    public virtual void MoveToGoldStash()
-    {
-        this.transform.position = Vector3.MoveTowards(this.transform.position, targetPoint.transform.position, movement * Time.deltaTime);
-    }
-
-    public virtual void RunBack()
-    {
-        this.transform.position = Vector3.MoveTowards(this.transform.position, startingPoint, movement * Time.deltaTime);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
