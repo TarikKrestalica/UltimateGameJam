@@ -59,7 +59,7 @@ public class WaveManager : MonoBehaviour
     void StopCurrentWave()
     {
         currentTime = 0;
-        waveTracker.gameObject.SetActive(false);
+        // waveTracker.gameObject.SetActive(false);
         UpdateText();
     }
 
