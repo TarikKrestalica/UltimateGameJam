@@ -7,13 +7,13 @@ using NavMeshPlus.Components;
 public class NavigationBaker : MonoBehaviour {
 
     public NavMeshSurface[] surfaces;
-    public Transform[] objectsToRotate;
+    public List<Transform> objectsToRotate;
 
     private float curZRot = 0;
     // Use this for initialization
     void Update () 
     {
-        for (int j = 0; j < objectsToRotate.Length; j++) 
+        for (int j = 0; j < objectsToRotate.Count; j++) 
         {
             curZRot += 15*Time.deltaTime;
             objectsToRotate[j].localRotation = Quaternion.Euler(new Vector3 (0, 0, curZRot));
