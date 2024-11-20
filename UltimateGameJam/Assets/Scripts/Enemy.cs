@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    public static float GoldBoost = 1;
     private float startingHealth;
     [SerializeField] float health;
     [SerializeField] uint goldAmount;
@@ -62,7 +63,7 @@ public class Enemy : MonoBehaviour
     public virtual void OnDeath()
     {
         uint totalCoinsEnemyLost = deathGold + goldStealAmount;
-        GameManager.player.AddGold(totalCoinsEnemyLost);
+        GameManager.player.AddGold((uint)(deathGold * GoldBoost));
         Destroy(this.gameObject);
     }
 
