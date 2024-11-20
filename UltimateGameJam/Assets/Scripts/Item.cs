@@ -44,7 +44,10 @@ public class Item : MonoBehaviour
         offset = transform.position - mousePosition;
     }
 
-    private void OnMouseUp() => (isDragging, collider.enabled) = (false, true);
+    private void OnMouseUp()
+    {
+        (isDragging, collider.enabled) = (false, true);
+    }
 
     private void HandleRotation()
     {
