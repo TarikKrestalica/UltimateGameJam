@@ -78,11 +78,18 @@ public class Enemy : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            OnStealGold(this.gameObject);
+            // OnStealGold(this.gameObject);
         }
     }
 
-    private void OnTriggerEnter2dD(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "GoldPile")
+        {
+            OnStealGold(this.gameObject);
+        }
+    }
+    private void OnCollisionEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "GoldPile")
         {

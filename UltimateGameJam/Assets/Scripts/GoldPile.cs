@@ -8,20 +8,21 @@ public class GoldPile : MonoBehaviour
 {
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Sprite[] sprites;
+    private CircleCollider2D collider2D;
 
-    private void Awake() => spriteRenderer = this.Get<SpriteRenderer>();
+    private void Awake() => (spriteRenderer, collider2D) = (this.Get<SpriteRenderer>(), this.Get<CircleCollider2D>());
 
     public void UpdateSprite(uint goldAmount)
     {
-        spriteRenderer.sprite = goldAmount switch
+        (spriteRenderer.sprite, collider2D.radius) = goldAmount switch
         {
-            0      => sprites[0],
-            < 100  => sprites[1],
-            < 400  => sprites[2],
-            < 800  => sprites[3],
-            < 1600 => sprites[4],
-            < 3200 => sprites[5],
-            _      => sprites[6],
+            0      => (sprites[0], 0),
+            < 100  => (sprites[1], 0.5f),
+            < 400  => (sprites[2], 0.6f),
+            < 800  => (sprites[3], 0.8f),
+            < 1600 => (sprites[4], 1.05f),      
+            < 3200 => (sprites[5], 1.35f),
+            _      => (sprites[6], 1.75f),
         };
     }
 }
