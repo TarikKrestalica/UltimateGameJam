@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] uint deathGold;
     [SerializeField] uint goldStealAmount;
 
-    GameObject targetPoint;
+    [SerializeField] GameObject targetPoint;
 
     [SerializeField] GameObject healthBar;
 
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         startingHealth = health;
-        targetPoint = GameObject.FindGameObjectWithTag("Player");
+        targetPoint = GameObject.FindGameObjectWithTag("Target");
         startingPoint = this.transform.position;
 
         if(!agent)

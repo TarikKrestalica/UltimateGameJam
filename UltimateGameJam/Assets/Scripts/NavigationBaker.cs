@@ -13,12 +13,6 @@ public class NavigationBaker : MonoBehaviour {
     // Use this for initialization
     void Update () 
     {
-        for (int j = 0; j < objectsToRotate.Count; j++) 
-        {
-            curZRot += 15*Time.deltaTime;
-            objectsToRotate[j].localRotation = Quaternion.Euler(new Vector3 (0, 0, curZRot));
-        }
-
         for (int i = 0; i < surfaces.Length; i++) 
         {
             surfaces[i].BuildNavMesh();    
