@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
+using NavMeshPlus.Components;
 
 public class BuyCard : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class BuyCard : MonoBehaviour
         CreateObject(); 
 
         // Bake new constraints for AI in runtime.
-        GenerateNavMesh();
         
         UpdateUI();
     }
