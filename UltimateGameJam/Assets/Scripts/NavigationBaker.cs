@@ -9,7 +9,6 @@ using NavMeshPlus.Components;
 public class NavigationBaker : MonoBehaviour {
 
     public NavMeshSurface[] surfaces;
-    public List<Transform> objectsToRotate;
 
     private float curZRot = 0;
     // Use this for initialization

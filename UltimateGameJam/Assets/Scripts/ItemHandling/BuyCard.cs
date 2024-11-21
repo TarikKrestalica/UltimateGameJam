@@ -35,7 +35,6 @@ public class BuyCard : MonoBehaviour
     void CreateObject()
     {
         GameObject newItem = Instantiate(LoadNeededItem(), Vector3.up, Quaternion.identity, GameObject.FindWithTag("Background").transform);
-        FindObjectOfType<NavigationBaker>().objectsToRotate.Add(newItem.transform);
     }
 
     GameObject LoadNeededItem()

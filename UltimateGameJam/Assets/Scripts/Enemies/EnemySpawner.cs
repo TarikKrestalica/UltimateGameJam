@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < enemySpawnRate; i++)
         {
             Vector3 spawnPosition = GetRandomPositionInRing();
-            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, GameObject.FindGameObjectWithTag("Background").transform);
         }  
     }
 
