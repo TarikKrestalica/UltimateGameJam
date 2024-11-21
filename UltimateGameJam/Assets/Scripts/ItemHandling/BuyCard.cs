@@ -35,8 +35,6 @@ public class BuyCard : MonoBehaviour
     void CreateObject()
     {
         GameObject newItem = Instantiate(LoadNeededItem(), Vector3.up, Quaternion.identity, GameObject.FindWithTag("Background").transform);
-        Vector3 modScale = new Vector3(120, 60, 1);
-        newItem.transform.localScale = modScale;
     }
 
     GameObject LoadNeededItem()
@@ -45,4 +43,5 @@ public class BuyCard : MonoBehaviour
         GameObject dup = Resources.Load(path) as GameObject;
         return dup;
     }
+
 }
