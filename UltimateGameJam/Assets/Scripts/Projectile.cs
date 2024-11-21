@@ -5,9 +5,7 @@ using ExtensionMethods;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
-{
-    [SerializeField] SpriteRenderer m_spriteRenderer;
-    
+{   
     [Range(0, 1000f)]
     [SerializeField] float travelSpeed;
 
