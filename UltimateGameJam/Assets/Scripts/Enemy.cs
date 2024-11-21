@@ -30,13 +30,15 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if(targetPoint)
-        {
-            MoveToGoldStash();
+        if (!targetPoint)
             return;
-        }
+        
+        MoveToGoldStash();
+        Vector2 direction = targetPoint.transform.position - transform.position;
 
-        RunBack();
+        // Calculate the angle (in degrees) and apply it
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     public void TakeDamage(uint new_damage_amt)
