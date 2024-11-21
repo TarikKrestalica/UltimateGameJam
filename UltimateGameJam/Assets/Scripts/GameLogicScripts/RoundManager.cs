@@ -26,7 +26,7 @@ public class RoundManager : MonoBehaviour
     {
         if(!GameManager.waveManager.TimeRemaining())
         {
-            roundTracker.text = "Wave " + (GameManager.waveManager.GetWaveCount() + 1);
+            roundTracker.text = $"Wave {GameManager.waveManager.GetWaveCount().ToString()}";
             ControlAnimation();
         }
     }

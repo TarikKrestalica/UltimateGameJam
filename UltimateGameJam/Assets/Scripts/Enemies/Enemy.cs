@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,39 +12,33 @@ public class Enemy : MonoBehaviour
     [SerializeField] uint goldAmount;
     [SerializeField] uint deathGold;
     [SerializeField] uint goldStealAmount;
-
+    
+    [Range(0, 10f)]
+    [SerializeField] float movement;
     [SerializeField] GameObject targetPoint;
 
     [SerializeField] GameObject healthBar;
-
-    [SerializeField] NavMeshAgent agent;
 
     private Vector3 startingPoint;
 
     void Start()
     {
         startingHealth = health;
-        targetPoint = GameObject.FindGameObjectWithTag("Target");
+        targetPoint = GameObject.FindGameObjectWithTag("Player");
         startingPoint = this.transform.position;
-
-        if(!agent)
-        {
-            Debug.LogError("Navmesh Not found!");
-            return;
-        }
-		agent.updateRotation = false;
-		agent.updateUpAxis = false;
     }
 
     void Update()
     {
-        if(!agent.isOnNavMesh)
-        {
-            Debug.LogError("NavMesh Not found!");
+        if (!targetPoint)
             return;
-        }
+        
+        MoveToGoldStash();
+        Vector2 direction = targetPoint.transform.position - transform.position;
 
-        agent.SetDestination(targetPoint.transform.position);
+        // Calculate the angle (in degrees) and apply it
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     public void TakeDamage(uint new_damage_amt)
@@ -71,15 +66,32 @@ public class Enemy : MonoBehaviour
         Destroy(g.gameObject); // For now.
     }
 
+    public virtual void MoveToGoldStash()
+    {
+        this.transform.position = Vector3.MoveTowards(this.transform.position, targetPoint.transform.position, movement * Time.deltaTime);
+    }
+
+    public virtual void RunBack()
+    {
+        this.transform.position = Vector3.MoveTowards(this.transform.position, startingPoint, movement * Time.deltaTime);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            OnStealGold(this.gameObject);
+            // OnStealGold(this.gameObject);
         }
     }
 
-    private void OnTriggerEnter2dD(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "GoldPile")
+        {
+            OnStealGold(this.gameObject);
+        }
+    }
+    private void OnCollisionEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "GoldPile")
         {

@@ -5,6 +5,8 @@ using UnityEngine;
 using TMPro;
 using Unity.Mathematics;
 using System.Threading.Tasks;
+using ExtensionMethods;
+using UnityEditor;
 
 public class WaveManager : MonoBehaviour
 {
@@ -53,13 +55,13 @@ public class WaveManager : MonoBehaviour
 
     void UpdateText()
     {
-        waveTracker.text = $"Wave #{currentWaveCount}";
+        waveTracker.text = currentWaveCount.ToString();
     }
 
     void StopCurrentWave()
     {
         currentTime = 0;
-        waveTracker.gameObject.SetActive(false);
+        // waveTracker.gameObject.SetActive(false);
         UpdateText();
     }
 
@@ -85,7 +87,8 @@ public class WaveManager : MonoBehaviour
     void RunTheClock()
     {
         currentTime -= Time.deltaTime;
-        timeTracker.text = "Time left: " + Math.Round(currentTime, 2);
+        currentTime.Log();
+        timeTracker.text = Math.Round(currentTime, 2).ToString("00.00");
     }
 
     public bool TimeRemaining()

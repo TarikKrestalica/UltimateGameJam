@@ -28,11 +28,8 @@ namespace ExtensionMethods
         }
 
         public static void Destroy          (this MonoBehaviour mono)                            => GameObject.Destroy(mono.gameObject);
-        public static void Show             (this MonoBehaviour mono)                            => mono.Get<Renderer>().enabled = false;
-        public static void Hide             (this MonoBehaviour mono)                            => mono.Get<Renderer>().enabled = true;
         public static void SetParent        (this MonoBehaviour child, GameObject newParent)     => child.transform.SetParent(newParent.transform, true);
         public static void SetParent        (this MonoBehaviour child, MonoBehaviour newParent)  => child.transform.SetParent(newParent.transform, true);
-        public static void Visible          (this MonoBehaviour mono, bool visible)              => mono.Get<Renderer>().enabled = visible;
         public static void SetLocalScale    (this MonoBehaviour mono, float scale)               => mono.transform.localScale    = new Vector3(scale, scale);
         public static void SetLocalScale    (this MonoBehaviour mono, float a, float b)          => mono.transform.localScale    = new Vector3(a, b);
         public static void SetLocalScale    (this MonoBehaviour mono, float a, float b, float c) => mono.transform.localScale    = new Vector3(a, b, c);
@@ -215,9 +212,6 @@ namespace ExtensionMethods
         ///  Gets the specified component from the last most child
         /// </summary>
         public static T GetChild<T>(this GameObject go, params int[] indexes) => GetChild(go, indexes).GetComponent<T>();
-        public static void Show(this GameObject go) => go.Visible(true);
-        public static void Hide(this GameObject go) => go.Visible(false);
-        public static void Visible(this GameObject go, bool visible) => go.GetComponent<Renderer>().enabled = visible;
     }
     public static class IEnumerableExt
     {
