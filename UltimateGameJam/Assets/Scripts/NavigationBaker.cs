@@ -10,7 +10,6 @@ public class NavigationBaker : MonoBehaviour {
 
     public NavMeshSurface[] surfaces;
 
-    private float curZRot = 0;
     // Use this for initialization
     void Update () 
     {

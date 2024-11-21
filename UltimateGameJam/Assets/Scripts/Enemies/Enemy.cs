@@ -93,24 +93,16 @@ public class Enemy : MonoBehaviour
         this.transform.position = Vector3.MoveTowards(this.transform.position, startingPoint, movement * Time.deltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            // OnStealGold(this.gameObject);
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "GoldPile")
+        if(collision.gameObject.tag == "Player")
         {
             OnStealGold(this.gameObject);
         }
     }
-    private void OnCollisionEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "GoldPile")
+        if(collision.gameObject.tag == "GoldPile" || collision.gameObject.tag == "Player")
         {
             OnStealGold(this.gameObject);
         }
