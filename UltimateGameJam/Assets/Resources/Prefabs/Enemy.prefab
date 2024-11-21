@@ -177,9 +177,10 @@ MonoBehaviour:
   goldAmount: 0
   deathGold: 20
   goldStealAmount: 10
+  movement: 0
   targetPoint: {fileID: 0}
-  healthBar: {fileID: 7121820409141812906}
   agent: {fileID: 4228442810178843329}
+  healthBar: {fileID: 7121820409141812906}
 --- !u!195 &4228442810178843329
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -190,7 +191,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
