@@ -9,9 +9,7 @@ TagManager:
   - WaveManager
   - EnemyManager
   - Background
-  - NavMesh
-  - Item
-  - Target
+  - GoldPile
   layers:
   - Default
   - TransparentFX
