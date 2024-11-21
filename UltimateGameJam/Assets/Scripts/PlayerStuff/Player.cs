@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ExtensionMethods;
 using UnityEngine;
 using TMPro;
@@ -27,18 +29,16 @@ public class Player : MonoBehaviour
     private Camera mainCamera;
     private float lastFireTime = 0f;
 
-    private void Awake()
+    private async void Awake()
     {
         currentDamage = 10f;
         SetCurrentGoldAmount(goldAmount);
         mainCamera = Camera.main;
-        
     }
 
     // Update is called once per frame
     private void Update()
     {
-        
         // Converting the mouse position to a point in 3D-space
         var mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
 
     public void SetCurrentGoldAmount(uint goldAmt)
     {
-        goldAmountTxt.text = $"Coins: {goldAmount}";
+        goldAmountTxt.text = goldAmount.ToString();
         goldPile.UpdateSprite(goldAmt);
     }
 

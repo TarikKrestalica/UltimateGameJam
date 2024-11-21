@@ -9,14 +9,14 @@ TagManager:
   - WaveManager
   - EnemyManager
   - Background
-  - NavMesh
-  - Item
+  - GoldPile
   - Target
+  - Item
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Obstacle
   - Water
   - UI
   - 
