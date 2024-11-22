@@ -42,7 +42,7 @@ public class UpgradeCard : MonoBehaviour
     [SerializeField] string prefix = "";
     #endregion
     
-    [SerializeField] private float nextValue;
+    private float nextValue;
 
     private void Start()
     {
