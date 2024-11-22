@@ -42,12 +42,9 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collider)
     {
-        if (collider.gameObject.tag == "Enemy")
-        {
-            Enemy e = collider.gameObject.GetComponent<Enemy>();
-            OnEnemyCollision(e);
-        }
-
+        Enemy e = collider.gameObject.GetComponent<Enemy>();
+        OnEnemyCollision(e);
         Destroy(this.gameObject);
+
     }
 }

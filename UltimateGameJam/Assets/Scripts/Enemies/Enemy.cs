@@ -1,26 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using ExtensionMethods;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
     public static float GoldBoost = 1;
-    private float startingHealth;
-    [SerializeField] float health;
-    [SerializeField] uint goldAmount;
-    [SerializeField] uint deathGold;
-    [SerializeField] uint goldStealAmount;
+    protected float startingHealth;
+    [SerializeField] protected float health;
+    [SerializeField] protected uint goldAmount;
+    [SerializeField] protected uint deathGold;
+    [SerializeField] protected uint goldStealAmount;
 
-    [SerializeField] GameObject targetPoint;
+    [SerializeField] protected GameObject targetPoint;
 
     [SerializeField] GameObject healthBar;
 
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] protected NavMeshAgent agent;
 
     private Vector3 startingPoint;
 
-    void Start()
+    public virtual void Start()
     {
         startingHealth = health;
         targetPoint = GameObject.FindGameObjectWithTag("Target");
@@ -35,7 +37,7 @@ public class Enemy : MonoBehaviour
 		agent.updateUpAxis = false;
     }
 
-    void Update()
+    public virtual void Update()
     {
         if(!agent.isOnNavMesh)
         {
@@ -44,9 +46,16 @@ public class Enemy : MonoBehaviour
         }
 
         agent.SetDestination(targetPoint.transform.position);
+
+        Vector3 direction = (targetPoint.transform.position - transform.position).normalized;
+        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion targetRotation = Quaternion.Euler(0f, 0f, targetAngle);
+
+        float rotationSpeed = 200f; // Degrees per second
+        this.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    public void TakeDamage(uint new_damage_amt)
+    public virtual void TakeDamage(uint new_damage_amt)
     {
         if(health - new_damage_amt <= 0)
         {
@@ -62,32 +71,24 @@ public class Enemy : MonoBehaviour
     {
         uint totalCoinsEnemyLost = deathGold + goldStealAmount;
         GameManager.player.AddGold((uint)(deathGold * GoldBoost));
-        Destroy(this.gameObject);
+        Destroy(this.transform.parent.gameObject);
     }
 
     public virtual void OnStealGold(GameObject g)
     {
         GameManager.player.TakeDamageToGoldStash(goldStealAmount);
-        Destroy(g.gameObject); // For now.
+        Destroy(g.transform.parent.gameObject); // For now.
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            OnStealGold(this.gameObject);
-        }
-    }
-
-    private void OnTriggerEnter2dD(Collider2D collision)
+    public virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "GoldPile")
         {
-            OnStealGold(this.gameObject);
+            OnStealGold(this.transform.parent.gameObject);
         }
     }
 
-    void ModifyItsHealthBar()
+    public void ModifyItsHealthBar()
     {
         // HealthBar mod.
         float percentage = (float)(health / startingHealth);
