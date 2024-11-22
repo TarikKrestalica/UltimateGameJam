@@ -7,7 +7,7 @@ using UnityEngine;
 
 enum UpgradeType
 {
-    Damage, Reload, GoldBoost
+    Damage, Reload, GoldBoost, WallDurability
 }
 
 public class UpgradeCard : MonoBehaviour
@@ -26,6 +26,7 @@ public class UpgradeCard : MonoBehaviour
     [SerializeField] float currentValue;
     [SerializeField] float maxValue;
     [SerializeField] UpgradeType upgradeType;
+    [SerializeField] GameObject upgradeButton;
 
     [Space]
     [Header("Upgrade Multipliers")]
@@ -55,6 +56,11 @@ public class UpgradeCard : MonoBehaviour
         costText.text = $"${cost}";
         currentValueText.text = FormatValue(currentValue);
         nextValueText.text = FormatValue(nextValue);
+
+        if(currentValue >= maxValue)
+        {
+            upgradeButton.SetActive(false);
+        }
     }
     
     
@@ -68,13 +74,17 @@ public class UpgradeCard : MonoBehaviour
             return;
             
         GameManager.player.GoldAmount -= cost;
-        GameManager.player.SetCurrentGoldAmount( GameManager.player.GoldAmount);
+        GameManager.player.SetCurrentGoldAmount(GameManager.player.GoldAmount);
         
         level++;
-        
+
         currentValue = nextValue;
-        nextValue = currentValue * nextValueMultiplier;
-        cost = (int)GetNewCost();
+        nextValue = currentValue * (currentValue * nextValueMultiplier);
+
+        if(nextValue >= maxValue)
+        {
+            nextValue = maxValue;
+        }
 
         switch (upgradeType)
         {
@@ -87,10 +97,28 @@ public class UpgradeCard : MonoBehaviour
             case UpgradeType.GoldBoost:
                 Enemy.GoldBoost = nextValue;
                 break;
+            case UpgradeType.WallDurability:
+                UpdateWallDurabilities(GameObject.FindGameObjectsWithTag("Item"), nextValue);
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
 
+        cost = (int)GetNewCost();
         UpdateUI();
+    }
+
+    void UpdateWallDurabilities(GameObject[] walls, float multiplier)
+    {
+        for(int i = 0; i < walls.Length; i++){
+            Item item = walls[i].GetComponent<Item>();
+            item.UpdateHealth(multiplier);
+        }
+
+    }
+
+    public float GetCurrentValue()
+    {
+        return currentValue;
     }
 }

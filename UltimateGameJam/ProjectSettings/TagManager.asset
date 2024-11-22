@@ -18,6 +18,7 @@ TagManager:
   - Politician
   - GoldPile
   - GameOver
+  - Upgrade
   layers:
   - Default
   - TransparentFX

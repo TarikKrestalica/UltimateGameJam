@@ -73,6 +73,19 @@ public class GameManager : MonoBehaviour
 
     private EnemySpawner m_enemySpawner;
 
+    public static Item item{
+        get{
+            if(gameManager.m_item == null)
+            {
+                gameManager.m_item = GameObject.FindGameObjectWithTag("Item").GetComponent<Item>();
+            }
+
+            return gameManager.m_item;
+        }
+    }
+
+    private Item m_item;
+
 
     void Start()
     {

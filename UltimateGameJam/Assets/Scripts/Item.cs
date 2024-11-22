@@ -13,12 +13,16 @@ public class Item : MonoBehaviour
     [SerializeField] GameObject healthBar;
     [Range(0, 100f)]
     [SerializeField] private float health;
+
+    [SerializeField] GameObject card;
     [SerializeField] TMP_Text healthTxt;
 
     float currentHealth;
 
     void Awake()
     {
+        UpgradeCard cref = GameObject.FindGameObjectWithTag("Upgrade").GetComponent<UpgradeCard>();
+        health = cref.GetCurrentValue();
         currentHealth = health;
         healthTxt.text = $"{currentHealth}";
     }
@@ -30,7 +34,7 @@ public class Item : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        
+
         if(!hasClicked)
             return;
             
@@ -65,5 +69,10 @@ public class Item : MonoBehaviour
             currentHealth -= Projectile.Damage;
             healthTxt.text = $"{currentHealth}";
         }
+    }
+
+    public void UpdateHealth(float multiplier)
+    {
+        health *= (health * multiplier);
     }
 }
