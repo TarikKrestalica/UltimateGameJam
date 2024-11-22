@@ -39,6 +39,9 @@ public class Enemy : MonoBehaviour
 
     public virtual void Update()
     {
+        if(GameManager.player.GameOver())
+            return;
+            
         if(!agent.isOnNavMesh)
         {
             Debug.LogError("NavMesh Not found!");

@@ -11,6 +11,7 @@ public class Peasant : Enemy
     float curRate = 0f;
 
     bool hasEnteredPile = false;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -29,6 +30,9 @@ public class Peasant : Enemy
     // Update is called once per frame
      public override void Update()
     {
+        if(GameManager.player.GameOver())
+            return;
+            
         if(!agent.isOnNavMesh)
         {
             Debug.LogError("NavMesh Not found!");

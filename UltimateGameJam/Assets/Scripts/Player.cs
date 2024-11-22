@@ -27,11 +27,14 @@ public class Player : MonoBehaviour
     private Camera mainCamera;
     private float lastFireTime = 0f;
 
+    private bool gameOver;
+
     private void Awake()
     {
         currentDamage = 10f;
         SetCurrentGoldAmount(goldAmount);
         mainCamera = Camera.main;
+        gameOver = false;
         
     }
 
@@ -62,7 +65,7 @@ public class Player : MonoBehaviour
 
     private void OnDeath() 
     {
-        Debug.Log("Game Over Logic here!");
+        GameObject.FindGameObjectWithTag("GameOver").SetActive(true);
     }
 
     public void SetCurrentGoldAmount(uint goldAmt)
@@ -98,4 +101,10 @@ public class Player : MonoBehaviour
     {
         currentDamage = newDamage;
     }
+
+    public bool GameOver()
+    {
+        return gameOver;
+    }
 }
+

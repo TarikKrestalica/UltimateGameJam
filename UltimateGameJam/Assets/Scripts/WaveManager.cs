@@ -41,6 +41,13 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.player.GameOver())
+        {
+            timeTracker.text = $"0:00";
+            return;
+        }
+            
+
         if(TimeRemaining())
         {
             if(hasTransitionExecuted)
@@ -59,6 +66,7 @@ public class WaveManager : MonoBehaviour
     void StopCurrentWave()
     {
         currentTime = 0;
+        timeTracker.text = $"0:00";
         waveTracker.gameObject.SetActive(false);
         UpdateText();
     }
