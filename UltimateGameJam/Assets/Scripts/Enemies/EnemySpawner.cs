@@ -112,4 +112,9 @@ public class EnemySpawner : MonoBehaviour
     {
         curDelay = timeDelay;
     }
+
+    public List<GameObject> GetEnemies()
+    {
+        return enemyPrefabs;
+    }
 }

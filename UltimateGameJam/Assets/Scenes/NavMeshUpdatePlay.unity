@@ -540,6 +540,7 @@ MonoBehaviour:
   rotationSpeed: 50
   goldPile: {fileID: 2118935152}
   equippedWeapon: {fileID: 2041030925}
+  gameOverIcon: {fileID: 1448315771}
 --- !u!50 &414487094
 Rigidbody2D:
   serializedVersion: 4
@@ -1007,7 +1008,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -189, y: -294}
+  m_AnchoredPosition: {x: -189.00003, y: -294}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &751255113
@@ -4106,7 +4107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2952971946992889270, guid: 7b14582c8c2724e52b4f524ad5a0d4bb, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4551722278522745447, guid: 7b14582c8c2724e52b4f524ad5a0d4bb, type: 3}
       propertyPath: cost
