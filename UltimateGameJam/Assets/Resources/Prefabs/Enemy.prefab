@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3aeaf68c552694e40a59f86b728cb36a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -125,7 +125,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.11, y: 0.97}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -177,10 +177,10 @@ MonoBehaviour:
   goldAmount: 0
   deathGold: 20
   goldStealAmount: 10
-  movement: 0.95
   targetPoint: {fileID: 0}
   healthBar: {fileID: 7121820409141812906}
   agent: {fileID: 4228442810178843329}
+  startingWaveIndex: 0
 --- !u!195 &4228442810178843329
 NavMeshAgent:
   m_ObjectHideFlags: 0
