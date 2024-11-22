@@ -318,3 +318,4 @@ MonoBehaviour:
   targetPoint: {fileID: 0}
   healthBar: {fileID: 5636188408160684389}
   agent: {fileID: 4525237548639534519}
+  startingWaveIndex: 3

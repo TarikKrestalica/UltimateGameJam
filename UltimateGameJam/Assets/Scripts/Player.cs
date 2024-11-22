@@ -7,14 +7,14 @@ using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
-    public uint GoldAmount
+    public int GoldAmount
     {
         get => goldAmount;
         set => goldAmount = value;
     }
     public float ReloadTime = 0.5f;
     
-    [SerializeField] uint goldAmount;
+    [SerializeField] int goldAmount;
     [SerializeField] TMP_Text goldAmountTxt;
     
     [Range(0, 100f)]
@@ -29,11 +29,14 @@ public class Player : MonoBehaviour
 
     private bool gameOver;
 
+    [SerializeField] GameObject gameOverIcon;
+
     private void Awake()
     {
         currentDamage = 10f;
         SetCurrentGoldAmount(goldAmount);
         mainCamera = Camera.main;
+        gameOverIcon.SetActive(false);
         gameOver = false;
         
     }
@@ -41,7 +44,13 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        
+        if(goldAmount <= 0)
+        {
+            OnDeath();
+            goldAmount = 0;
+            SetCurrentGoldAmount(0);
+            return;
+        }
         // Converting the mouse position to a point in 3D-space
         var mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -65,28 +74,32 @@ public class Player : MonoBehaviour
 
     private void OnDeath() 
     {
-        GameObject.FindGameObjectWithTag("GameOver").SetActive(true);
+        gameOverIcon.SetActive(true);
+        gameOver = true;
     }
 
-    public void SetCurrentGoldAmount(uint goldAmt)
+    public void SetCurrentGoldAmount(int goldAmt)
     {
         goldAmountTxt.text = $"{goldAmount}";
         goldPile.UpdateSprite(goldAmt);
     }
 
     // Enemy collision.
-    public void TakeDamageToGoldStash(uint amt)
+    public void TakeDamageToGoldStash(int amt)
     {
         if (goldAmount - amt <= 0)
         {
             OnDeath();
+            goldAmount = 0;
+            SetCurrentGoldAmount(0);
+            return;
         }
 
         goldAmount -= amt;
         SetCurrentGoldAmount(goldAmount);
     }
 
-    public void AddGold(uint amount)
+    public void AddGold(int amount)
     {
         goldAmount += amount;
         SetCurrentGoldAmount(goldAmount);

@@ -10,9 +10,9 @@ public class Enemy : MonoBehaviour
     public static float GoldBoost = 1;
     protected float startingHealth;
     [SerializeField] protected float health;
-    [SerializeField] protected uint goldAmount;
-    [SerializeField] protected uint deathGold;
-    [SerializeField] protected uint goldStealAmount;
+    [SerializeField] protected int goldAmount;
+    [SerializeField] protected int deathGold;
+    [SerializeField] protected int goldStealAmount;
 
     [SerializeField] protected GameObject targetPoint;
 
@@ -20,10 +20,19 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] protected NavMeshAgent agent;
 
+    [SerializeField] protected int startingWaveIndex; // Wave in which the enemy will be spawned.
+
     private Vector3 startingPoint;
 
     public virtual void Start()
     {
+        if(startingWaveIndex > GameManager.waveManager.GetWaveCount()) // If it won't be introduced yet, don't spawn.
+        {
+            Debug.Log(this.transform.parent.name + " is not introduced yet!");
+            GameManager.enemyManager.ResetDelay();
+            Destroy(this.transform.parent.gameObject);
+        }
+
         startingHealth = health;
         targetPoint = GameObject.FindGameObjectWithTag("Target");
         startingPoint = this.transform.position;
@@ -58,7 +67,7 @@ public class Enemy : MonoBehaviour
         this.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    public virtual void TakeDamage(uint new_damage_amt)
+    public virtual void TakeDamage(int new_damage_amt)
     {
         if(health - new_damage_amt <= 0)
         {
@@ -72,22 +81,22 @@ public class Enemy : MonoBehaviour
 
     public virtual void OnDeath()
     {
-        uint totalCoinsEnemyLost = deathGold + goldStealAmount;
-        GameManager.player.AddGold((uint)(deathGold * GoldBoost));
+        int totalCoinsEnemyLost = deathGold + goldStealAmount;
+        GameManager.player.AddGold(totalCoinsEnemyLost);
         Destroy(this.transform.parent.gameObject);
     }
 
-    public virtual void OnStealGold(GameObject g)
+    public virtual void OnStealGold()
     {
         GameManager.player.TakeDamageToGoldStash(goldStealAmount);
-        Destroy(g.transform.parent.gameObject); // For now.
+        Destroy(this.transform.parent.gameObject); // For now.
     }
 
     public virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "GoldPile")
         {
-            OnStealGold(this.transform.parent.gameObject);
+            OnStealGold();
         }
     }
 
@@ -97,5 +106,10 @@ public class Enemy : MonoBehaviour
         float percentage = (float)(health / startingHealth);
         Vector3 newScale = new Vector3(percentage, .2f, 1);
         healthBar.transform.localScale = newScale;
+    }
+
+    public int WaveStart()
+    {
+        return startingWaveIndex;
     }
 }

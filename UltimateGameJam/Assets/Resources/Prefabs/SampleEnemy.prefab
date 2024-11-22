@@ -190,6 +190,7 @@ MonoBehaviour:
   targetPoint: {fileID: 0}
   healthBar: {fileID: 2277637294247186640}
   agent: {fileID: 887988701785296200}
+  startingWaveIndex: 1
 --- !u!61 &5430650613691037457
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -39,10 +39,10 @@ public class Politician : Enemy
         Debug.Log("Damage: " + damage);
 
         // Apply damage to the player
-        GameManager.player.TakeDamageToGoldStash((uint)damage);
+        GameManager.player.TakeDamageToGoldStash((int)damage);
     }
 
-    public override void TakeDamage(uint new_damage_amt)
+    public override void TakeDamage(int new_damage_amt)
     {
         if(health - new_damage_amt <= 0)
         {

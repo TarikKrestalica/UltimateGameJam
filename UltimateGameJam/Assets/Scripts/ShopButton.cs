@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 public class ShopButton : MonoBehaviour
 {
-    [FormerlySerializedAs("goldAmount")] [SerializeField] uint cost;
+    [FormerlySerializedAs("goldAmount")] [SerializeField] int cost;
 
     public void OnClick()
     {

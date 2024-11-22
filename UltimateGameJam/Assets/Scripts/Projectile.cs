@@ -11,7 +11,7 @@ public class Projectile : MonoBehaviour
     [Range(0, 1000f)]
     [SerializeField] float travelSpeed;
 
-    public static uint Damage = 10;
+    public static int Damage = 10;
 
     private float startTime = 0;
 
@@ -34,16 +34,35 @@ public class Projectile : MonoBehaviour
         if (Time.time - startTime >= 5.0)
             this.Destroy();
     }
-
-    public void OnEnemyCollision(Enemy enemy) // Death logic for enemy
-    {
-        enemy.TakeDamage(Damage);
-    }
-
     private void OnCollisionEnter2D(Collision2D collider)
     {
-        Enemy e = collider.gameObject.GetComponent<Enemy>();
-        OnEnemyCollision(e);
+        var e = collider.gameObject.GetComponent<Enemy>();
+        if(collider.gameObject.tag == "Enemy")
+        {
+            e = collider.gameObject.GetComponent<Enemy>();
+            e.TakeDamage(Damage);
+        }
+        else if(collider.gameObject.tag == "Businessman")
+        {
+            e = collider.gameObject.GetComponent<Businessman>();
+            e.TakeDamage(Damage);
+        }
+        else if(collider.gameObject.tag == "CEO")
+        {
+            e = collider.gameObject.GetComponent<CEO>();
+            e.TakeDamage(Damage);
+        }
+        else if(collider.gameObject.tag == "Politician")
+        {
+            e = collider.gameObject.GetComponent<Politician>();
+            e.TakeDamage(Damage);
+        }
+        else if(collider.gameObject.tag == "Peasant")
+        {
+            e = collider.gameObject.GetComponent<Peasant>();
+            e.TakeDamage(Damage);
+        }
+
         Destroy(this.gameObject);
 
     }

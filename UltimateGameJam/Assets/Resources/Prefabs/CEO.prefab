@@ -178,6 +178,7 @@ MonoBehaviour:
   targetPoint: {fileID: 0}
   healthBar: {fileID: 2434618219594610913}
   agent: {fileID: 3445974785699167160}
+  startingWaveIndex: 7
 --- !u!1 &1717229439736483602
 GameObject:
   m_ObjectHideFlags: 0

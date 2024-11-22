@@ -11,7 +11,7 @@ public class GoldPile : MonoBehaviour
 
     private void Awake() => spriteRenderer = this.Get<SpriteRenderer>();
 
-    public void UpdateSprite(uint goldAmount)
+    public void UpdateSprite(int goldAmount)
     {
         spriteRenderer.sprite = goldAmount switch
         {

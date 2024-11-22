@@ -67,7 +67,7 @@ public class UpgradeCard : MonoBehaviour
         if (GameManager.player.GoldAmount < cost)
             return;
             
-        GameManager.player.GoldAmount -= (uint)cost;
+        GameManager.player.GoldAmount -= cost;
         GameManager.player.SetCurrentGoldAmount( GameManager.player.GoldAmount);
         
         level++;
@@ -79,7 +79,7 @@ public class UpgradeCard : MonoBehaviour
         switch (upgradeType)
         {
             case UpgradeType.Damage:
-                Projectile.Damage = (uint)nextValue;
+                Projectile.Damage = (int)nextValue;
                 break;
             case UpgradeType.Reload:
                 GameManager.player.ReloadTime = nextValue;

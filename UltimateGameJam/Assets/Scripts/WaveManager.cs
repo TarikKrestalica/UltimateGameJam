@@ -74,6 +74,7 @@ public class WaveManager : MonoBehaviour
     void MoveToNextWave()
     {
         currentWaveCount += 1;
+        GameManager.enemyManager.AdjustSpawningParameters(currentWaveCount);
         UpdateText();
         currentTime = timeLimitPerWave;
         waveTracker.gameObject.SetActive(true);

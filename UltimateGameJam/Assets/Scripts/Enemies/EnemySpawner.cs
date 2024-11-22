@@ -69,32 +69,32 @@ public class EnemySpawner : MonoBehaviour
         );
     }
 
-    void AdjustSpawningParameters(int waveCount)
+    public void AdjustSpawningParameters(int waveCount)
     {
         switch(waveCount)
         {
-            case 2:
-                enemySpawnRate *= 2;
-                timeDelay -= 1;
-                maxRadius -= .75f;
+            case 3:
+                enemySpawnRate += 1;
+                timeDelay -= .5f;
+                maxRadius -= .5f;
                 break;
-            case 4:
-                enemySpawnRate *= 2;
+            case 5:
+                enemySpawnRate += 1;
                 timeDelay -= .5f;
                 maxRadius -= .25f;
                 break;
-            case 6:
-                enemySpawnRate += 2;
+            case 7:
+                enemySpawnRate += 1;
                 timeDelay -= .5f;
                 maxRadius -= .25f;
                 break;
-            case 8:
-                enemySpawnRate += 2;
+            case 9:
+                enemySpawnRate += 1;
                 timeDelay -= .2f;
                 maxRadius -= .25f;
                 break;
-            case 10:
-                enemySpawnRate *= 2;
+            case 11:
+                enemySpawnRate += 1;
                 timeDelay -= .3f;
                 maxRadius -= .25f;
                 break;
@@ -105,8 +105,11 @@ public class EnemySpawner : MonoBehaviour
 
     public GameObject ChooseEnemy()
     {
-        int rndIndex = rnd.Next(0, enemyPrefabs.Count);
-        return enemyPrefabs[rndIndex];
+        return enemyPrefabs[rnd.Next(0, enemyPrefabs.Count)];
     }
 
+    public void ResetDelay()
+    {
+        curDelay = timeDelay;
+    }
 }

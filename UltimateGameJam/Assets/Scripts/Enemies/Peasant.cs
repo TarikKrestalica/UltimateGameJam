@@ -69,14 +69,14 @@ public class Peasant : Enemy
         }
     }
 
-    public override void OnStealGold(GameObject g)
+    public override void OnStealGold()
     {
         GameManager.player.TakeDamageToGoldStash(goldStealAmount);
     }
 
     void InitiateSteal(GameObject g)
     {
-        this.OnStealGold(g);
+        this.OnStealGold();
         curRate = goldStealRate;
     }
 }

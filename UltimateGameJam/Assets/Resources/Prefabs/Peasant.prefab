@@ -318,4 +318,5 @@ MonoBehaviour:
   targetPoint: {fileID: 0}
   healthBar: {fileID: 1526532883146757179}
   agent: {fileID: 1419049437777975770}
+  startingWaveIndex: 1
   goldStealRate: 1.5
