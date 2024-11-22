@@ -168,7 +168,7 @@ RectTransform:
   m_GameObject: {fileID: 6490331494940787442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 50, y: 40, z: 1}
+  m_LocalScale: {x: 40, y: 40, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9032871508699083018}
@@ -429,4 +429,5 @@ MonoBehaviour:
   rotSpeed: 10
   healthBar: {fileID: 0}
   health: 40
+  card: {fileID: 0}
   healthTxt: {fileID: 3800006491643526009}
