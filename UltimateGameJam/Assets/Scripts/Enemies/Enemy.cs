@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] float movement;
     [SerializeField] GameObject targetPoint;
 
+    [SerializeField] NavMeshAgent agent;
+
     [SerializeField] GameObject healthBar;
 
     private Vector3 startingPoint;
@@ -26,17 +29,33 @@ public class Enemy : MonoBehaviour
         startingHealth = health;
         targetPoint = GameObject.FindGameObjectWithTag("Player");
         startingPoint = this.transform.position;
+
+        if(!agent)
+        {
+            Debug.LogError("Navmesh Not found!");
+            return;
+        }
+		agent.updateRotation = false;
+		agent.updateUpAxis = false;
     }
 
     void Update()
     {
-        if(targetPoint)
+        if (!targetPoint)
+            return;
+        
+        if(!agent.isOnNavMesh)
         {
-            MoveToGoldStash();
+            Debug.LogError("NavMesh Not found!");
             return;
         }
 
-        RunBack();
+        agent.SetDestination(targetPoint.transform.position);
+        Vector2 direction = targetPoint.transform.position - transform.position;
+
+        // Calculate the angle (in degrees) and apply it
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     public void TakeDamage(uint new_damage_amt)
@@ -78,11 +97,18 @@ public class Enemy : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            OnStealGold(this.gameObject);
+            // OnStealGold(this.gameObject);
         }
     }
 
-    private void OnTriggerEnter2dD(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "GoldPile")
+        {
+            OnStealGold(this.gameObject);
+        }
+    }
+    private void OnCollisionEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "GoldPile")
         {
