@@ -1,72 +1,78 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using TMPro;
+using ExtensionMethods;
 
 public class Item : MonoBehaviour
 {
     [Range(0, 40f)]
-    [SerializeField] private float rotSpeed;
+    [SerializeField] float rotSpeed;
 
-    private bool isMouseOver = false;
-    private bool isDragging = false;
-    private Vector3 offset;
-    private Collider2D collider;
+    [SerializeField] GameObject healthBar;
+    [Range(0, 100f)]
+    [SerializeField] private float health;
 
-    private void Start() => collider = GetComponent<Collider2D>();
+    [SerializeField] GameObject card;
+    [SerializeField] TMP_Text healthTxt;
 
-    private void Update()
+    float currentHealth;
+
+    void Awake()
     {
-        DetectMouseOver();
-
-        if (Input.GetMouseButtonDown(0) && isMouseOver)
-            OnMouseDown();
-        if (Input.GetMouseButtonUp(0) && isDragging)
-            OnMouseUp();
-        if (isDragging)
-            HandleRotation();
+        UpgradeCard cref = GameObject.FindGameObjectWithTag("Upgrade").GetComponent<UpgradeCard>();
+        health = cref.GetCurrentValue();
+        currentHealth = health;
+        healthTxt.text = $"{currentHealth}";
     }
 
-    private void DetectMouseOver()
+    bool hasClicked = false;
+    void Update()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0f; // Ignore Z-axis for 2D
+        if(currentHealth <= 0)
+        {
+            Destroy(this.gameObject);
+        }
 
-        isMouseOver = collider.bounds.Contains(mousePosition);
-    }
-
-    private void OnMouseDown()
-    {
-        (isDragging, collider.enabled) = (true, false);
-
-        // Calculate offset
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = transform.position.z;
-        offset = transform.position - mousePosition;
-    }
-
-    private void OnMouseUp()
-    {
-        (isDragging, collider.enabled) = (false, true);
-    }
-
-    private void HandleRotation()
-    {
-        Vector3 curRot = transform.localEulerAngles;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            curRot.z -= Time.deltaTime * rotSpeed;
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            curRot.z += Time.deltaTime * rotSpeed;
-
-        transform.localEulerAngles = curRot;
-    }
-
-    private void OnMouseDrag()
-    {
-        if (!isDragging) 
+        if(!hasClicked)
             return;
+            
+        Vector3 curRot = this.transform.localEulerAngles;
+        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            curRot.z -= Time.deltaTime * rotSpeed;
+        }
+        else if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            curRot.z += Time.deltaTime * rotSpeed;
+        }
 
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = transform.position.z; // Maintain original Z position
-        transform.position = mousePosition + offset;
+        this.transform.localEulerAngles = curRot;
+    }
+    public void OnDrag(BaseEventData data)
+    {
+        PointerEventData pointerData = (PointerEventData)data;
+        Vector2 position = pointerData.position;
+        this.transform.localPosition = position;
+    }
+
+    public void ModifyClicked()
+    {
+        hasClicked = !hasClicked;
+    }
+
+    public void OnCollisionEnter2D(Collision2D collider)
+    {
+        if(collider.gameObject.tag == "Projectile")
+        {
+            currentHealth -= Projectile.Damage;
+            healthTxt.text = $"{currentHealth}";
+        }
+    }
+
+    public void UpdateHealth(float multiplier)
+    {
+        health *= (health * multiplier);
     }
 }

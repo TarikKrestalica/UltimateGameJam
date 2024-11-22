@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] GameObject enemyPrefab;   
+    [SerializeField] List<GameObject> enemyPrefabs;   
     [SerializeField] float minRadius = 3f;     
     [SerializeField] float maxRadius = 8f;     
     [SerializeField] int numberOfEnemies = 10; 
@@ -18,7 +19,13 @@ public class EnemySpawner : MonoBehaviour
     [Range(1, 10)]
     [SerializeField] int enemySpawnRate; 
 
-    void Start() => curDelay = timeDelay;
+    System.Random rnd;
+
+    void Start()
+    {
+        curDelay = timeDelay;
+        rnd = new System.Random();
+    } 
 
     void Update()
     {   
@@ -46,14 +53,14 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < enemySpawnRate; i++)
         {
             Vector3 spawnPosition = GetRandomPositionInRing();
-            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, GameObject.FindGameObjectWithTag("Background").transform);
+            Instantiate(ChooseEnemy(), spawnPosition, Quaternion.identity);
         }  
     }
 
     Vector3 GetRandomPositionInRing()
     {
-        float angle = Random.Range(0f, Mathf.PI * 2);
-        float radius = Random.Range(minRadius, maxRadius);
+        float angle = UnityEngine.Random.Range(0f, Mathf.PI * 2);
+        float radius = UnityEngine.Random.Range(minRadius, maxRadius);
 
         return new Vector3(
             playerTransform.position.x + Mathf.Cos(angle) * radius,
@@ -62,38 +69,58 @@ public class EnemySpawner : MonoBehaviour
         );
     }
 
-    void AdjustSpawningParameters(int waveCount)
+    public void AdjustSpawningParameters(int waveCount)
     {
         switch(waveCount)
         {
-            case 2:
-                enemySpawnRate *= 2;
-                timeDelay -= 1;
-                maxRadius -= .75f;
+            case 3:
+                enemySpawnRate += 1;
+                timeDelay -= .5f;
+                maxRadius -= .5f;
                 break;
-            case 4:
-                enemySpawnRate *= 2;
+            case 5:
+                enemySpawnRate += 1;
                 timeDelay -= .5f;
                 maxRadius -= .25f;
                 break;
-            case 6:
-                enemySpawnRate += 2;
+            case 7:
+                enemySpawnRate += 1;
                 timeDelay -= .5f;
                 maxRadius -= .25f;
                 break;
-            case 8:
-                enemySpawnRate += 2;
-                timeDelay -= .2f;
+            case 9:
+                enemySpawnRate += 1;
+                timeDelay += .7f;
                 maxRadius -= .25f;
                 break;
-            case 10:
-                enemySpawnRate *= 2;
-                timeDelay -= .3f;
+            case 11:
+                enemySpawnRate += 1;
+                timeDelay += .3f;
                 maxRadius -= .25f;
                 break;
             default:
+                if(waveCount % 5 == 0) // Update after 5 iterations
+                {
+                    enemySpawnRate += 3;
+                    timeDelay -= .1f;
+                    maxRadius += .2f;
+                };
                 break;
         }
     }
 
+    public GameObject ChooseEnemy()
+    {
+        return enemyPrefabs[rnd.Next(0, enemyPrefabs.Count)];
+    }
+
+    public void ResetDelay()
+    {
+        curDelay = timeDelay;
+    }
+
+    public List<GameObject> GetEnemies()
+    {
+        return enemyPrefabs;
+    }
 }

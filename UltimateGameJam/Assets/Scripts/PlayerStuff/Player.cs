@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using ExtensionMethods;
 using UnityEngine;
 using TMPro;
@@ -9,14 +7,14 @@ using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
-    public uint GoldAmount
+    public int GoldAmount
     {
         get => goldAmount;
         set => goldAmount = value;
     }
     public float ReloadTime = 0.5f;
     
-    [SerializeField] uint goldAmount;
+    [SerializeField] int goldAmount;
     [SerializeField] TMP_Text goldAmountTxt;
     
     [Range(0, 100f)]
@@ -29,16 +27,30 @@ public class Player : MonoBehaviour
     private Camera mainCamera;
     private float lastFireTime = 0f;
 
-    private async void Awake()
+    private bool gameOver;
+
+    [SerializeField] GameObject gameOverIcon;
+
+    private void Awake()
     {
         currentDamage = 10f;
         SetCurrentGoldAmount(goldAmount);
         mainCamera = Camera.main;
+        gameOverIcon.SetActive(false);
+        gameOver = false;
+        
     }
 
     // Update is called once per frame
     private void Update()
     {
+        if(goldAmount <= 0)
+        {
+            OnDeath();
+            goldAmount = 0;
+            SetCurrentGoldAmount(0);
+            return;
+        }
         // Converting the mouse position to a point in 3D-space
         var mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -62,28 +74,32 @@ public class Player : MonoBehaviour
 
     private void OnDeath() 
     {
-        Debug.Log("Game Over Logic here!");
+        gameOverIcon.SetActive(true);
+        gameOver = true;
     }
 
-    public void SetCurrentGoldAmount(uint goldAmt)
+    public void SetCurrentGoldAmount(int goldAmt)
     {
-        goldAmountTxt.text = goldAmount.ToString();
+        goldAmountTxt.text = $"{goldAmount}";
         goldPile.UpdateSprite(goldAmt);
     }
 
     // Enemy collision.
-    public void TakeDamageToGoldStash(uint amt)
+    public void TakeDamageToGoldStash(int amt)
     {
         if (goldAmount - amt <= 0)
         {
             OnDeath();
+            goldAmount = 0;
+            SetCurrentGoldAmount(0);
+            return;
         }
 
         goldAmount -= amt;
         SetCurrentGoldAmount(goldAmount);
     }
 
-    public void AddGold(uint amount)
+    public void AddGold(int amount)
     {
         goldAmount += amount;
         SetCurrentGoldAmount(goldAmount);
@@ -98,4 +114,10 @@ public class Player : MonoBehaviour
     {
         currentDamage = newDamage;
     }
+
+    public bool GameOver()
+    {
+        return gameOver;
+    }
 }
+

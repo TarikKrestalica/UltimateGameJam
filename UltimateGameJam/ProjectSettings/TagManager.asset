@@ -9,7 +9,16 @@ TagManager:
   - WaveManager
   - EnemyManager
   - Background
+  - NavMesh
+  - Item
+  - Target
+  - Peasant
+  - Businessman
+  - CEO
+  - Politician
   - GoldPile
+  - GameOver
+  - Upgrade
   layers:
   - Default
   - TransparentFX

@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/EnemyTesting.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/MenuScene.unity
+    guid: f56fd143d7695ce45afba30c41886016
+  - enabled: 1
+    path: Assets/Scenes/Instructions.unity
+    guid: fcdf0202949534de9beab1e3c941b532
+  - enabled: 1
+    path: Assets/Scenes/NavMeshUpdatePlay.unity
+    guid: f850cb449b80a4631999dfd4307c98e5
   m_configObjects: {}

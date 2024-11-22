@@ -5,8 +5,6 @@ using UnityEngine;
 using TMPro;
 using Unity.Mathematics;
 using System.Threading.Tasks;
-using ExtensionMethods;
-using UnityEditor;
 
 public class WaveManager : MonoBehaviour
 {
@@ -43,6 +41,13 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.player.GameOver())
+        {
+            timeTracker.text = $"0:00";
+            return;
+        }
+            
+
         if(TimeRemaining())
         {
             if(hasTransitionExecuted)
@@ -55,19 +60,21 @@ public class WaveManager : MonoBehaviour
 
     void UpdateText()
     {
-        waveTracker.text = currentWaveCount.ToString();
+        waveTracker.text = $"Wave #{currentWaveCount}";
     }
 
     void StopCurrentWave()
     {
         currentTime = 0;
-        // waveTracker.gameObject.SetActive(false);
+        timeTracker.text = $"0:00";
+        waveTracker.gameObject.SetActive(false);
         UpdateText();
     }
 
     void MoveToNextWave()
     {
         currentWaveCount += 1;
+        GameManager.enemyManager.AdjustSpawningParameters(currentWaveCount);
         UpdateText();
         currentTime = timeLimitPerWave;
         waveTracker.gameObject.SetActive(true);
@@ -87,8 +94,7 @@ public class WaveManager : MonoBehaviour
     void RunTheClock()
     {
         currentTime -= Time.deltaTime;
-        currentTime.Log();
-        timeTracker.text = Math.Round(currentTime, 2).ToString("00.00");
+        timeTracker.text = "Time left: " + Math.Round(currentTime, 2);
     }
 
     public bool TimeRemaining()

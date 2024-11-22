@@ -6,7 +6,7 @@ using TMPro;
 public class BuyCard : MonoBehaviour
 {
     [SerializeField] TMP_Text costText;
-    [SerializeField] uint cost;
+    [SerializeField] int cost;
 
     [SerializeField] GameObject item;
     [SerializeField] string itemName;
@@ -21,7 +21,7 @@ public class BuyCard : MonoBehaviour
         if (GameManager.player.GoldAmount < cost)
             return;
             
-        GameManager.player.GoldAmount -= (uint)cost;
+        GameManager.player.GoldAmount -= cost;
         GameManager.player.SetCurrentGoldAmount( GameManager.player.GoldAmount);
         CreateObject(); 
         UpdateUI();

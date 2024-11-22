@@ -73,20 +73,19 @@ public class GameManager : MonoBehaviour
 
     private EnemySpawner m_enemySpawner;
 
-    /*
-    public static NavMesh m_navMesh_Manager{
+    public static Item item{
         get{
-            if(gameManager.m_navMesh_Manager == null)
+            if(gameManager.m_item == null)
             {
-                gameManager.m_navMesh_Manager = GameObject.FindGameObjectWithTag("NavMesh").GetComponent<NavMesh>();
+                gameManager.m_item = GameObject.FindGameObjectWithTag("Item").GetComponent<Item>();
             }
 
-            return gameManager.m_navMesh_Manager;
+            return gameManager.m_item;
         }
     }
 
-    private NavMesh m_navMesh_Manager;
-    */
+    private Item m_item;
+
 
     void Start()
     {
@@ -97,4 +96,5 @@ public class GameManager : MonoBehaviour
         gameManager = this;
         DontDestroyOnLoad(gameManager);
     }
+
 }
