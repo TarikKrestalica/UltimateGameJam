@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a556d4cbccde45641b322af3ebd0a010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 4650832924647899448, guid: 70786d1388fd24d53885fceef7ca4430, type: 3}
+  enemyPrefab: {fileID: 8465686387987558470, guid: db49bd6e7a3c449ea9217164770a35fc, type: 3}
   minRadius: 3
   maxRadius: 7
   numberOfEnemies: 10
