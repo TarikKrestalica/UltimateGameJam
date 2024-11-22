@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] GameObject enemyPrefab;   
+    [SerializeField] List<GameObject> enemyPrefabs;   
     [SerializeField] float minRadius = 3f;     
     [SerializeField] float maxRadius = 8f;     
     [SerializeField] int numberOfEnemies = 10; 
@@ -18,7 +19,13 @@ public class EnemySpawner : MonoBehaviour
     [Range(1, 10)]
     [SerializeField] int enemySpawnRate; 
 
-    void Start() => curDelay = timeDelay;
+    System.Random rnd;
+
+    void Start()
+    {
+        curDelay = timeDelay;
+        rnd = new System.Random();
+    } 
 
     void Update()
     {   
@@ -46,14 +53,14 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < enemySpawnRate; i++)
         {
             Vector3 spawnPosition = GetRandomPositionInRing();
-            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            Instantiate(ChooseEnemy(), spawnPosition, Quaternion.identity);
         }  
     }
 
     Vector3 GetRandomPositionInRing()
     {
-        float angle = Random.Range(0f, Mathf.PI * 2);
-        float radius = Random.Range(minRadius, maxRadius);
+        float angle = UnityEngine.Random.Range(0f, Mathf.PI * 2);
+        float radius = UnityEngine.Random.Range(minRadius, maxRadius);
 
         return new Vector3(
             playerTransform.position.x + Mathf.Cos(angle) * radius,
@@ -94,6 +101,12 @@ public class EnemySpawner : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public GameObject ChooseEnemy()
+    {
+        int rndIndex = rnd.Next(0, enemyPrefabs.Count);
+        return enemyPrefabs[rndIndex];
     }
 
 }

@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
 
     public void SetCurrentGoldAmount(uint goldAmt)
     {
-        goldAmountTxt.text = $"Coins: {goldAmount}";
+        goldAmountTxt.text = $"{goldAmount}";
         goldPile.UpdateSprite(goldAmt);
     }
 
