@@ -90,15 +90,21 @@ public class EnemySpawner : MonoBehaviour
                 break;
             case 9:
                 enemySpawnRate += 1;
-                timeDelay -= .2f;
+                timeDelay += .7f;
                 maxRadius -= .25f;
                 break;
             case 11:
                 enemySpawnRate += 1;
-                timeDelay -= .3f;
+                timeDelay += .3f;
                 maxRadius -= .25f;
                 break;
             default:
+                if(waveCount % 5 == 0) // Update after 5 iterations
+                {
+                    enemySpawnRate += 3;
+                    timeDelay -= .1f;
+                    maxRadius += .2f;
+                };
                 break;
         }
     }
